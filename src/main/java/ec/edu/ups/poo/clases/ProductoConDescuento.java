@@ -24,6 +24,12 @@ public class ProductoConDescuento extends Producto {
         this.descuetoPorcentaje = descuetoPorcentaje;
     }
 
+
+    @Override
+    public double calcularPrecio() {
+        return 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -43,11 +49,4 @@ public class ProductoConDescuento extends Producto {
                 "descuetoPorcentaje=" + descuetoPorcentaje +
                 '}';
     }
-
-    @Override
-    public double calcularPrecio() {
-        return 0;
-    }
-
-
 }

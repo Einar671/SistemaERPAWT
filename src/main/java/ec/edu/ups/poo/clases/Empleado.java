@@ -14,12 +14,20 @@ public class Empleado extends Persona{
 
     public Empleado() {
         super();
+        this.solicitudes = new ArrayList<>();
     }
     public Empleado(String identificacion, String nombre, String email, Departamento departamento, Cargo cargo) {
         super(identificacion, nombre, email);
         this.departamento = departamento;
         this.cargo = cargo;
         this.solicitudes = new ArrayList<>();
+    }
+
+    public List<SolicitudCompra> getSolicitudes() {
+        return solicitudes;
+    }
+    public void addSolicitudes(SolicitudCompra solicitudes) {
+        this.solicitudes.add(solicitudes);
     }
 
     public Departamento getDepartamento() {
@@ -41,14 +49,13 @@ public class Empleado extends Persona{
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         Empleado empleado = (Empleado) o;
-        return Objects.equals(departamento, empleado.departamento) && cargo == empleado.cargo;
+        return Objects.equals(departamento, empleado.departamento) && cargo == empleado.cargo && Objects.equals(solicitudes, empleado.solicitudes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), departamento, cargo);
+        return Objects.hash(departamento, cargo, solicitudes);
     }
 
     @Override
@@ -56,6 +63,7 @@ public class Empleado extends Persona{
         return "Empleado{" +
                 "departamento=" + departamento +
                 ", cargo=" + cargo +
+                ", solicitudes=" + solicitudes +
                 '}';
     }
 }

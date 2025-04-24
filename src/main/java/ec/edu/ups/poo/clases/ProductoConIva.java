@@ -24,6 +24,12 @@ public class ProductoConIva extends Producto {
         this.porcentajeIVA = porcentajeIVA;
     }
 
+
+    @Override
+    public double calcularPrecio() {
+        return 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -38,9 +44,9 @@ public class ProductoConIva extends Producto {
     }
 
     @Override
-    public double calcularPrecio() {
-        return 0;
+    public String toString() {
+        return "ProductoConIva{" +
+                "porcentajeIVA=" + porcentajeIVA +
+                '}';
     }
-
-
 }

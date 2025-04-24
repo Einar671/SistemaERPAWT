@@ -14,9 +14,12 @@ public class SolicitudCompra {
     private List<DetalleCompra> detalles;
 
     public SolicitudCompra() {
+        this.detalles = new ArrayList<>();
     }
 
     public SolicitudCompra(int id, GregorianCalendar fecha, EstadoDeSolictud estado) {
+        this.detalles = new ArrayList<>();
+
         this.id = id;
         this.fecha = fecha;
         this.estado = estado;

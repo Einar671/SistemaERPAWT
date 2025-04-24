@@ -71,4 +71,5 @@ public class DetalleCompra {
                 ", producto=" + producto +
                 '}';
     }
+
 }

@@ -64,8 +64,7 @@ public class Departamento {
     }
 
     @Override
-    public String
-    toString() {
+    public String toString() {
         return "Departamento{" +
                 "nombreDepartamento='" + nombreDepartamento + '\'' +
                 ", descripcionDepartamento='" + descripcionDepartamento + '\'' +
