@@ -1,12 +1,15 @@
 package ec.edu.ups.poo.clases;
 
+import ec.edu.ups.poo.interfaces.Calculable;
+
 import java.util.Objects;
 
-public class DetalleCompra {
+public class DetalleCompra implements Calculable {
     private int codigo;
     private int cantidad;
     private String observaciones;
     private Producto producto;
+    private double subtotal;
 
     public DetalleCompra() {
     }
@@ -16,7 +19,9 @@ public class DetalleCompra {
         this.cantidad = cantidad;
         this.observaciones = observaciones;
         this.producto = producto;
+
     }
+
 
     public int getCodigo() {
         return codigo;
@@ -50,6 +55,10 @@ public class DetalleCompra {
         this.producto = producto;
     }
 
+    public double getSubtotal() {
+        return subtotal;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -72,4 +81,9 @@ public class DetalleCompra {
                 '}';
     }
 
+    @Override
+    public double calcularCostoTotal() {
+        subtotal=producto.getPrecioProducto() * cantidad;
+        return subtotal;
+    }
 }

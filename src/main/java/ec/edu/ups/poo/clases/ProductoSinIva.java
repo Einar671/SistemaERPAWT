@@ -16,7 +16,8 @@ public class ProductoSinIva extends Producto{
 
     @Override
     public double calcularPrecio() {
-        return 0;
+        System.out.println(categoriaExension);
+        return getPrecioProducto();
     }
 
     public ProductoSinIva(int id, String nombreProducto, double precioProducto, UnidadMedida unidadMedida, String categoriaExension) {

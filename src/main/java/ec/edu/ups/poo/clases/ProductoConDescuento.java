@@ -27,7 +27,8 @@ public class ProductoConDescuento extends Producto {
 
     @Override
     public double calcularPrecio() {
-        return 0;
+        double respuesta = (getPrecioProducto())- descuetoPorcentaje * getPrecioProducto();
+        return respuesta;
     }
 
     @Override

@@ -1,17 +1,19 @@
 package ec.edu.ups.poo.clases;
 
 import ec.edu.ups.poo.enums.EstadoDeSolictud;
+import ec.edu.ups.poo.interfaces.Calculable;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Objects;
 
-public class SolicitudCompra {
+public class SolicitudCompra implements Calculable {
     private int id;
     private GregorianCalendar fecha;
     private EstadoDeSolictud estado;
     private List<DetalleCompra> detalles;
+    private double total;
 
     public SolicitudCompra() {
         this.detalles = new ArrayList<>();
@@ -19,10 +21,10 @@ public class SolicitudCompra {
 
     public SolicitudCompra(int id, GregorianCalendar fecha, EstadoDeSolictud estado) {
         this.detalles = new ArrayList<>();
-
         this.id = id;
         this.fecha = fecha;
         this.estado = estado;
+        this. total = total;
     }
 
     public int getId() {
@@ -58,8 +60,8 @@ public class SolicitudCompra {
         this.detalles.add(detalle);
     }
 
-    public void calcularCostoTotal(){
-
+    public double getTotal() {
+        return total;
     }
 
     public EstadoDeSolictud gestionarEstado(EstadoDeSolictud estado){
@@ -86,5 +88,13 @@ public class SolicitudCompra {
                 ", estado=" + estado +
                 ", detalles=" + detalles +
                 '}';
+    }
+
+    @Override
+    public double calcularCostoTotal() {
+        for(DetalleCompra detalle: detalles){
+            total += detalle.getSubtotal();
+        }
+        return 0;
     }
 }

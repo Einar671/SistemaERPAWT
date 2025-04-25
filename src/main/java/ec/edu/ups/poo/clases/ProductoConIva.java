@@ -27,7 +27,8 @@ public class ProductoConIva extends Producto {
 
     @Override
     public double calcularPrecio() {
-        return 0;
+        double respuesta = getPrecioProducto()- porcentajeIVA * getPrecioProducto();
+        return respuesta;
     }
 
     @Override
