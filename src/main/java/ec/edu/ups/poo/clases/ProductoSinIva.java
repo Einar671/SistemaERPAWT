@@ -7,8 +7,11 @@ import java.util.Objects;
 public class ProductoSinIva extends Producto{
     private String categoriaExension;
 
-    public ProductoSinIva(int id, String nombreProducto, double precioProducto, UnidadMedida unidadMedida, Proveedor proveedor) {
-        super(id, nombreProducto, precioProducto, unidadMedida, proveedor);
+    public ProductoSinIva() {
+    }
+
+    public ProductoSinIva(int id, String nombreProducto, double precioProducto, UnidadMedida unidadMedida) {
+        super(id, nombreProducto, precioProducto, unidadMedida);
     }
 
     @Override
@@ -16,8 +19,8 @@ public class ProductoSinIva extends Producto{
         return 0;
     }
 
-    public ProductoSinIva(int id, String nombreProducto, double precioProducto, UnidadMedida unidadMedida, Proveedor proveedor, String categoriaExension) {
-        super(id, nombreProducto, precioProducto, unidadMedida, proveedor);
+    public ProductoSinIva(int id, String nombreProducto, double precioProducto, UnidadMedida unidadMedida, String categoriaExension) {
+        super(id, nombreProducto, precioProducto, unidadMedida);
         this.categoriaExension = categoriaExension;
     }
 

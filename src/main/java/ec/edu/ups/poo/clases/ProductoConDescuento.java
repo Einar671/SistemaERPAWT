@@ -11,8 +11,8 @@ public class ProductoConDescuento extends Producto {
 
     }
 
-    public ProductoConDescuento(int id, String nombreProducto, double precioProducto, UnidadMedida unidadMedida, Proveedor proveedor, double descuetoPorcentaje) {
-        super(id, nombreProducto, precioProducto, unidadMedida, proveedor);
+    public ProductoConDescuento(int id, String nombreProducto, double precioProducto, UnidadMedida unidadMedida, double descuetoPorcentaje) {
+        super(id, nombreProducto, precioProducto, unidadMedida);
         this.descuetoPorcentaje = descuetoPorcentaje;
     }
 

@@ -11,8 +11,8 @@ public class ProductoConIva extends Producto {
 
     }
 
-    public ProductoConIva(int id, String nombreProducto, double precioProducto, UnidadMedida unidadMedida, Proveedor proveedor, double porcentajeIVA) {
-        super(id, nombreProducto, precioProducto, unidadMedida, proveedor);
+    public ProductoConIva(int id, String nombreProducto, double precioProducto, UnidadMedida unidadMedida, double porcentajeIVA) {
+        super(id, nombreProducto, precioProducto, unidadMedida);
         this.porcentajeIVA = porcentajeIVA;
     }
 

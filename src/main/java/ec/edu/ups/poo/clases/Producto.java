@@ -15,12 +15,11 @@ public abstract class Producto {
 
     }
 
-    public Producto(int id, String nombreProducto, double precioProducto, UnidadMedida unidadMedida, Proveedor proveedor) {
+    public Producto(int id, String nombreProducto, double precioProducto, UnidadMedida unidadMedida) {
         this.id = id;
         this.nombreProducto = nombreProducto;
         this.precioProducto = precioProducto;
         this.unidadMedida = unidadMedida;
-        this.proveedor = proveedor;
     }
 
     public int getId() {

@@ -9,21 +9,20 @@ public class Proveedor extends Persona {
     private String telefono;
 
     public Proveedor() {
-        this.productos = new ArrayList<Producto>();
     }
 
-    public Proveedor(String identificacion, String nombre, String email, String telefono) {
+    public Proveedor(String identificacion, String nombre, String email, List<Producto> productos, String telefono) {
         super(identificacion, nombre, email);
+        this.productos = productos;
         this.telefono = telefono;
-        this.productos = new ArrayList<>();
     }
 
     public List<Producto> getProductos() {
         return productos;
     }
 
-    public void addProductos(Producto productos) {
-        this.productos.add(productos);
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
     }
 
     public String getTelefono() {
