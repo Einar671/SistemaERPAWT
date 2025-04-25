@@ -13,7 +13,6 @@ public class Main {
         Proveedor proveedor1 = new Proveedor();
         List<Proveedor> proveedor = new ArrayList<>();
         List<Empleado> empleados = new ArrayList<>();
-        List<Producto> productos = new ArrayList<>();
         ProductoConIva productoConIva = new ProductoConIva();
         ProductoConDescuento productoConDesc = new ProductoConDescuento();
         ProductoSinIva productoSinIva = new ProductoSinIva();
@@ -36,13 +35,13 @@ public class Main {
             opcion = leer.nextInt();
             switch (opcion) {
                 case 1:
-                    int opcionprove;
-                    System.out.println("-*-*------Registrar proveedor-*-*---------");
-                    System.out.println("1. Registrar proveedor");
-                    System.out.println("2. Salir");
-                    opcionprove = leer.nextInt();
-                    boolean continua=true;
-                    while (continua){
+                    boolean continua = true;
+                    while (continua) {
+                        System.out.println("-*-*------Registrar proveedor-*-*---------");
+                        System.out.println("1. Registrar proveedor");
+                        System.out.println("2. Salir");
+                        int opcionprove = leer.nextInt();
+
                         if (opcionprove == 1) {
                             int optipo;
                             System.out.println("Digite la identificacion del proveedor: ");
@@ -51,21 +50,22 @@ public class Main {
                             String nombre = leer.next();
                             System.out.println("Digite el email del proveedor: ");
                             String email = leer.next();
+                            leer.nextLine();
                             System.out.println("Digite el telefono del proveedor: ");
                             String telefono = leer.next();
-                            boolean continuarpro=true;
+
+                            List<Producto> productos = new ArrayList<>();
+                            boolean continuarpro = true;
+
                             while (continuarpro) {
                                 System.out.println("------------Registre los productos del proveedor--------------");
                                 System.out.println("*********1. PRODUCTO CON IVA");
                                 System.out.println("*********2. PRODUCTO SIN IVA");
                                 System.out.println("*********3. PRODUCTO CON DESCUENTO");
-                                System.out.println("*********4. SALIR DE REGISTRO DE PRODUCTO0");
+                                System.out.println("*********4. SALIR DE REGISTRO DE PRODUCTO");
                                 optipo = leer.nextInt();
-                                List<ProductoConIva> listaProductoConIva = new ArrayList<>();
-                                List<ProductoSinIva> productoSinIvas = new ArrayList<>();
-                                List<ProductoConDescuento> listaProductoConDescuento = new ArrayList<>();
+
                                 if (optipo == 1) {
-                                    String opmedida;
                                     System.out.println("Ingrese el id del producto: ");
                                     int id = leer.nextInt();
                                     System.out.println("Ingrese el nombre del producto: ");
@@ -76,88 +76,77 @@ public class Main {
                                     System.out.println("a. Unidad");
                                     System.out.println("b. Kilogramo");
                                     System.out.println("c. Litro");
-                                    opmedida = leer.next();
+                                    String opmedida = leer.next();
+
                                     if (opmedida.equalsIgnoreCase("a")) {
-                                        productoConIva = new ProductoConIva(id, nombreProducto, precio, UnidadMedida.UNIDAD, 0.15);
-                                       productos.add(productoConIva);
-
+                                        productos.add(new ProductoConIva(id, nombreProducto, precio, UnidadMedida.UNIDAD, 0.15));
                                     } else if (opmedida.equalsIgnoreCase("b")) {
-                                        productoConIva = new ProductoConIva(id, nombreProducto, precio, UnidadMedida.KILOGRAMO, 0.15);
-                                        productos.add(productoConIva);
-
+                                        productos.add(new ProductoConIva(id, nombreProducto, precio, UnidadMedida.KILOGRAMO, 0.15));
                                     } else if (opmedida.equalsIgnoreCase("c")) {
-                                        productoConIva = new ProductoConIva(id, nombreProducto, precio, UnidadMedida.LITRO, 0.15);
-                                        productos.add(productoConIva);
+                                        productos.add(new ProductoConIva(id, nombreProducto, precio, UnidadMedida.LITRO, 0.15));
                                     }
-                                }
-                                if (optipo == 2) {
-                                    String opmedida;
+
+                                } else if (optipo == 2) {
                                     System.out.println("Ingrese el id del producto: ");
                                     int id = leer.nextInt();
                                     System.out.println("Ingrese el nombre del producto: ");
                                     String nombreProducto = leer.next();
                                     System.out.println("Ingrese el precio del producto: ");
                                     double precio = leer.nextDouble();
-                                    System.out.println("Ingrese la excension(alimento, servicios basicos, salud, educacion,transporte): ");
+                                    System.out.println("Ingrese la excension: ");
                                     String excension = leer.next();
                                     System.out.println("Ingrese el tipo de medida del producto");
                                     System.out.println("a. Unidad");
                                     System.out.println("b. Kilogramo");
                                     System.out.println("c. Litro");
-                                    opmedida = leer.next();
+                                    String opmedida = leer.next();
 
                                     if (opmedida.equalsIgnoreCase("a")) {
-                                        productoSinIva = new ProductoSinIva(id, nombreProducto, precio, UnidadMedida.UNIDAD, excension);
-                                        productos.add(productoSinIva);
-
+                                        productos.add(new ProductoSinIva(id, nombreProducto, precio, UnidadMedida.UNIDAD, excension));
                                     } else if (opmedida.equalsIgnoreCase("b")) {
-                                        productoSinIva = new ProductoSinIva(id, nombreProducto, precio, UnidadMedida.KILOGRAMO, excension);
-                                        productos.add(productoSinIva);
+                                        productos.add(new ProductoSinIva(id, nombreProducto, precio, UnidadMedida.KILOGRAMO, excension));
                                     } else if (opmedida.equalsIgnoreCase("c")) {
-                                        productoSinIva = new ProductoSinIva(id, nombreProducto, precio, UnidadMedida.LITRO, excension);
-                                        productos.add(productoSinIva);
+                                        productos.add(new ProductoSinIva(id, nombreProducto, precio, UnidadMedida.LITRO, excension));
                                     }
 
-                                }
-                                if (optipo == 3) {
-                                    String opmedida;
+                                } else if (optipo == 3) {
                                     System.out.println("Ingrese el id del producto: ");
                                     int id = leer.nextInt();
                                     System.out.println("Ingrese el nombre del producto: ");
                                     String nombreProducto = leer.next();
                                     System.out.println("Ingrese el precio del producto: ");
                                     double precio = leer.nextDouble();
-                                    System.out.println("Ingrese el procentaje del descuento: ");
-                                    double descuento1 = leer.nextDouble();
-                                    double descuentototal = descuento1/100;
+                                    System.out.println("Ingrese el porcentaje del descuento: ");
+                                    double descuento = leer.nextDouble() / 100;
                                     System.out.println("Ingrese el tipo de medida del producto");
                                     System.out.println("a. Unidad");
                                     System.out.println("b. Kilogramo");
                                     System.out.println("c. Litro");
-                                    opmedida = leer.next();
+                                    String opmedida = leer.next();
+
                                     if (opmedida.equalsIgnoreCase("a")) {
-                                        productoConDesc= new ProductoConDescuento(id,nombreProducto,precio,UnidadMedida.UNIDAD,descuentototal);
-                                        productos.add(productoConDesc);
+                                        productos.add(new ProductoConDescuento(id, nombreProducto, precio, UnidadMedida.UNIDAD, descuento));
                                     } else if (opmedida.equalsIgnoreCase("b")) {
-                                        productoConDesc=new ProductoConDescuento(id,nombreProducto,precio,UnidadMedida.KILOGRAMO,descuentototal);
-                                        productos.add(productoConDesc);
+                                        productos.add(new ProductoConDescuento(id, nombreProducto, precio, UnidadMedida.KILOGRAMO, descuento));
                                     } else if (opmedida.equalsIgnoreCase("c")) {
-                                        productoConDesc=new ProductoConDescuento(id,nombreProducto,precio,UnidadMedida.LITRO,descuentototal);
-                                        productos.add(productoConDesc);
+                                        productos.add(new ProductoConDescuento(id, nombreProducto, precio, UnidadMedida.LITRO, descuento));
                                     }
-                                }
-                                if (optipo == 4) {
-                                    continuarpro=false;
+
+                                } else if (optipo == 4) {
+                                    continuarpro = false;
                                 }
                             }
-                            proveedor1=new Proveedor(identificacion,nombre,email,productos,telefono);
+
+                            proveedor1 = new Proveedor(identificacion, nombre, email, productos, telefono);
                             proveedor.add(proveedor1);
-                        }
-                        else if (opcionprove==2){
-                            continua=false;
+                            System.out.println("✅ Proveedor registrado con éxito.");
+
+                        } else if (opcionprove == 2) {
+                            continua = false; // salir del menú de registro de proveedores
                         }
                     }
                     break;
+
                 case 2:
 
                     break;
