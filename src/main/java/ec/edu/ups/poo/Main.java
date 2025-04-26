@@ -4,15 +4,19 @@ import ec.edu.ups.poo.clases.*;
 import ec.edu.ups.poo.enums.*;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        DetalleCompra detalle = new DetalleCompra();
         Proveedor proveedor1 = new Proveedor();
         List<Proveedor> proveedor = new ArrayList<>();
         List<Empleado> empleados = new ArrayList<>();
+        List<SolicitudCompra> solicitud= new ArrayList<>();
+        List<DetalleCompra> detalleCompras=new ArrayList<>();
         ProductoConIva productoConIva = new ProductoConIva();
         ProductoConDescuento productoConDesc = new ProductoConDescuento();
         ProductoSinIva productoSinIva = new ProductoSinIva();
@@ -48,6 +52,7 @@ public class Main {
                             String identificacion = leer.next();
                             System.out.println("Digite el nombre del proveedor: ");
                             String nombre = leer.next();
+                            leer.nextLine();
                             System.out.println("Digite el email del proveedor: ");
                             String email = leer.next();
                             leer.nextLine();
@@ -142,14 +147,95 @@ public class Main {
                             System.out.println("✅ Proveedor registrado con éxito.");
 
                         } else if (opcionprove == 2) {
-                            continua = false; // salir del menú de registro de proveedores
+                            continua = false;
+                        }
+                    }
+                    break;
+                case 2:
+                    boolean continuaSolicitud = true;
+                    while (continuaSolicitud) {
+                        System.out.println("-*-*---------- SOLICITUD DE COMPRA -*-*-----------");
+                        System.out.println("1. Solicitud de compra");
+                        System.out.println("2. Salir");
+                        int op = leer.nextInt();
+
+                        if (op == 1) {
+                            System.out.println("Ingrese el id de la solicitud: ");
+                            int id = leer.nextInt();
+                            System.out.println("Ingrese el año de la solicitud: ");
+                            int anio = leer.nextInt();
+                            System.out.println("Ingrese el mes de la solicitud (1 - 12): ");
+                            int mes = leer.nextInt();
+                            System.out.println("Ingrese el día de la solicitud (1 - 31): ");
+                            int dia = leer.nextInt();
+
+                            GregorianCalendar fecha = new GregorianCalendar(anio, mes - 1, dia);
+
+                            boolean detallesol = true;
+
+                            while (detallesol) {
+                                System.out.println("---------DETALLE DE SOLICITUD--------");
+                                System.out.println("1. Agregar detalle de compra");
+                                System.out.println("2. Finalizar solicitud");
+                                int op2 = leer.nextInt();
+
+                                if (op2 == 1) {
+                                    System.out.println("Ingrese el código del detalle: ");
+                                    int codigo = leer.nextInt();
+                                    System.out.println("Ingrese la cantidad del producto: ");
+                                    int cantidad = leer.nextInt();
+                                    System.out.println("Ingrese la observación del producto: ");
+                                    String observacion = leer.next();
+
+
+                                    System.out.println("Seleccione el proveedor:");
+                                    for (int i = 0; i < proveedor.size(); i++) {
+                                        System.out.println((i + 1) + ". " + proveedor.get(i).getNombre());
+                                    }
+                                    int indexProveedor = leer.nextInt() - 1;
+
+                                    if (indexProveedor >= 0 && indexProveedor < proveedor.size()) {
+                                        Proveedor proveedorSeleccionado = proveedor.get(indexProveedor);
+                                        List<Producto> productosProveedor = proveedorSeleccionado.getProductos();
+
+                                        if (productosProveedor.isEmpty()) {
+                                            System.out.println("⚠️ Este proveedor no tiene productos registrados.");
+                                        } else {
+                                            System.out.println("Seleccione el producto del proveedor:");
+                                            for (int i = 0; i < productosProveedor.size(); i++) {
+                                                System.out.println((i + 1) + ". " + productosProveedor.get(i).getNombreProducto());
+                                            }
+
+                                            int indexProducto = leer.nextInt() - 1;
+
+                                            if (indexProducto >= 0 && indexProducto < productosProveedor.size()) {
+                                                Producto productoSeleccionado = productosProveedor.get(indexProducto);
+
+
+                                                detalle=new DetalleCompra(codigo, cantidad, observacion, productoSeleccionado);
+                                                detalleCompras.add(detalle);
+
+                                                System.out.println("✅ Detalle agregado con éxito.");
+                                            } else {
+                                                System.out.println("❌ Índice de producto no válido.");
+                                            }
+                                        }
+                                    } else {
+                                        System.out.println("❌ Índice de proveedor no válido.");
+                                    }
+                                } else if (op2 == 2) {
+                                    detallesol = false;
+                                }
+                            }
+                            solicitud.add(new SolicitudCompra(id,fecha,EstadoDeSolictud.EN_REVISION));
+
+                            System.out.println("✅ Solicitud de compra registrada con éxito.");
+                        } else if (op == 2) {
+                            continuaSolicitud = false;
                         }
                     }
                     break;
 
-                case 2:
-
-                    break;
                 case 3:
                     break;
                 case 4:
