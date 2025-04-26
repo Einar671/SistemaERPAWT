@@ -30,7 +30,7 @@ public class Main {
             System.out.println("3. Listar proveedores");
             System.out.println("4. Listar productos");
             System.out.println("5. Listar solicitudes de compra");
-            System.out.println("6. Buscar proveedor por id");
+            System.out.println("6. Buscar proveedor por identificador");
             System.out.println("7. Buscar producto por nombre");
             System.out.println("8. Buscar solicitud por numero");
             System.out.println("9. Aprobar / Rechazar solicitud de compra");
@@ -74,14 +74,14 @@ public class Main {
                                     System.out.println("Ingrese el id del producto: ");
                                     int id = leer.nextInt();
                                     System.out.println("Ingrese el nombre del producto: ");
-                                    String nombreProducto = leer.next();
+                                    String nombreProducto = leer.nextLine();
                                     System.out.println("Ingrese el precio del producto: ");
                                     double precio = leer.nextDouble();
                                     System.out.println("Ingrese el tipo de medida del producto");
                                     System.out.println("a. Unidad");
                                     System.out.println("b. Kilogramo");
                                     System.out.println("c. Litro");
-                                    String opmedida = leer.next();
+                                    String opmedida = leer.nextLine();
 
                                     if (opmedida.equalsIgnoreCase("a")) {
                                         productos.add(new ProductoConIva(id, nombreProducto, precio, UnidadMedida.UNIDAD, 0.15));
@@ -95,11 +95,11 @@ public class Main {
                                     System.out.println("Ingrese el id del producto: ");
                                     int id = leer.nextInt();
                                     System.out.println("Ingrese el nombre del producto: ");
-                                    String nombreProducto = leer.next();
+                                    String nombreProducto = leer.nextLine();
                                     System.out.println("Ingrese el precio del producto: ");
                                     double precio = leer.nextDouble();
                                     System.out.println("Ingrese la excension: ");
-                                    String excension = leer.next();
+                                    String excension = leer.nextLine();
                                     System.out.println("Ingrese el tipo de medida del producto");
                                     System.out.println("a. Unidad");
                                     System.out.println("b. Kilogramo");
@@ -237,10 +237,22 @@ public class Main {
                     break;
 
                 case 3:
+                    System.out.println("-*-*---------- LISTA DE PROVEEDORES -*-*-----------");
+                    for(Proveedor p : proveedor){
+                        System.out.println(p);
+                    }
                     break;
                 case 4:
+                    System.out.println("-*-*---------- LISTA DE PRODUCTOS -*-*-----------");
+                    for(Producto p : proveedor1.getProductos()){
+                        System.out.println(p);
+                    }
                     break;
                 case 5:
+                    System.out.println("-*-*---------- LISTA DE SOLICITUDES -*-*-----------");
+                    for(SolicitudCompra s : solicitud){
+                        System.out.println(s);
+                    }
                     break;
                 case 6:
                     break;
