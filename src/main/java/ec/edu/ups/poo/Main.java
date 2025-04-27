@@ -1,6 +1,7 @@
 package ec.edu.ups.poo;
 
 import ec.edu.ups.poo.clases.*;
+import ec.edu.ups.poo.controllers.Methods;
 import ec.edu.ups.poo.enums.*;
 
 import java.util.ArrayList;
@@ -15,11 +16,12 @@ public class Main {
         Proveedor proveedor1 = new Proveedor();
         List<Proveedor> proveedor = new ArrayList<>();
         List<Empleado> empleados = new ArrayList<>();
-        List<SolicitudCompra> solicitud= new ArrayList<>();
-        List<DetalleCompra> detalleCompras=new ArrayList<>();
+        List<SolicitudCompra> solicitud = new ArrayList<>();
+        List<DetalleCompra> detalleCompras = new ArrayList<>();
         ProductoConIva productoConIva = new ProductoConIva();
         ProductoConDescuento productoConDesc = new ProductoConDescuento();
         ProductoSinIva productoSinIva = new ProductoSinIva();
+        Methods methods = new Methods();
         Scanner leer = new Scanner(System.in);
         int opcion;
         boolean continuar = true;
@@ -212,7 +214,7 @@ public class Main {
                                                 Producto productoSeleccionado = productosProveedor.get(indexProducto);
 
 
-                                                detalle=new DetalleCompra(codigo, cantidad, observacion, productoSeleccionado);
+                                                detalle = new DetalleCompra(codigo, cantidad, observacion, productoSeleccionado);
                                                 detalleCompras.add(detalle);
 
                                                 System.out.println("✅ Detalle agregado con éxito.");
@@ -227,8 +229,7 @@ public class Main {
                                     detallesol = false;
                                 }
                             }
-                            solicitud.add(new SolicitudCompra(id,fecha,EstadoDeSolictud.EN_REVISION));
-
+                            solicitud.add(new SolicitudCompra(id, fecha, EstadoDeSolictud.EN_REVISION));
                             System.out.println("✅ Solicitud de compra registrada con éxito.");
                         } else if (op == 2) {
                             continuaSolicitud = false;
@@ -238,31 +239,106 @@ public class Main {
 
                 case 3:
                     System.out.println("-*-*---------- LISTA DE PROVEEDORES -*-*-----------");
-                    for(Proveedor p : proveedor){
+                    for (Proveedor p : proveedor) {
                         System.out.println(p);
                     }
                     break;
                 case 4:
                     System.out.println("-*-*---------- LISTA DE PRODUCTOS -*-*-----------");
-                    for(Producto p : proveedor1.getProductos()){
+                    for (Producto p : proveedor1.getProductos()) {
                         System.out.println(p);
                     }
                     break;
                 case 5:
                     System.out.println("-*-*---------- LISTA DE SOLICITUDES -*-*-----------");
-                    for(SolicitudCompra s : solicitud){
+                    for (SolicitudCompra s : solicitud) {
                         System.out.println(s);
                     }
                     break;
                 case 6:
+                    System.out.println("-*-*---------- BUSQUEDA POR IDENTIFICACION PROOVEDOR -*-*-----------");
+                    System.out.println("INGRESAR LA IDENTIFICACION A BUSCAR: ");
+                    String identificacion = leer.nextLine();
+                    methods.insertionSortIdentificacion(proveedor);
+                    System.out.println("ORDENANDO IDENTIFICACION PROVEDOR......");
+                    Proveedor respuesta = methods.buscarProveedorPorIdentificacion(proveedor, identificacion);
+                    if (respuesta == null)
+                        System.out.println("PROVEEDOR NO ENCONTRADO");
+                    else
+                        System.out.println("PROVEEDOR ENCONTRADO: \n " + respuesta);
                     break;
                 case 7:
+                    System.out.println("-*-*---------- BUSQUEDA POR NOMBRE PRODUCTO -*-*-----------");
+                    System.out.println("INGRESAR EL NOMBRE PRODUCTO: ");
+                    String nombre = leer.nextLine();
+                    methods.ordenarProductosNombre(proveedor1.getProductos());
+                    System.out.println("ORDENANDO EL NOMBRE PRODUCTO......");
+                    Producto producto = methods.buscarProductoPorNombre(proveedor1.getProductos(), nombre);
+                    if (producto == null)
+                        System.out.println("PRODUCTO NO ENCONTRADO");
+                    else
+                        System.out.println("PRODUCTO ENCONTRADO: \n " + producto);
                     break;
                 case 8:
+                    System.out.println("-*-*---------- BUSQUEDA POR NUMERO DE SOLICITUD -*-*-----------");
+                    System.out.println("INGRESAR EL NUMERO DE LA SOLICITUD: ");
+                    int numero = leer.nextInt();
+                    methods.ordenarSolicitudesPorNumero(solicitud);
+                    System.out.println("ORDENANDO LAS SOLICITUDES......");
+                    SolicitudCompra solicitudCompra = methods.buscarSolicitudesPorNumero(solicitud, numero);
+                    if (solicitudCompra == null)
+                        System.out.println("SOLICITUD NO ENCONTRADA");
+                    else
+                        System.out.println("SOLICITUD ENCONTRADA: \n " + solicitudCompra);
                     break;
                 case 9:
+                    methods.ordenarSolicitudesPorNumero(solicitud);
+                    System.out.println("-*-*---------- SELECCIONE LA LISTA QUE SERA APROVADA/DESAPROVADA -*-*-----------");
+                    for (int i = 0; i < solicitud.size(); i++) {
+                        System.out.println("Solicitud n° " + (i + 1) + "\n" + solicitud.get(i));
+                    }
+                    int numeroSolicitud = leer.nextInt();
+                    SolicitudCompra solcitudAD = methods.buscarSolicitudesPorNumero(solicitud, numeroSolicitud);
+                    if (solcitudAD == null)
+                        System.out.println("SOLICITUD NO ENCONTRADA");
+                    else {
+                        System.out.println("SOLICITUD ENCONTRADA: \n " + solcitudAD);
+                        boolean aprovadaDesaprovda = true;
+                        while (aprovadaDesaprovda) {
+                            System.out.println("¿Qué desea hacer con la solicitud?");
+                            System.out.println("1. Aprobar solicitud");
+                            System.out.println("2. Rechazar solicitud");
+                            int decision = leer.nextInt();
+
+                            if (decision == 1) {
+                                solcitudAD.setEstado(EstadoDeSolictud.APROVADA);
+                                System.out.println("✅ Solicitud aprobada con éxito.");
+                                aprovadaDesaprovda = false;
+                            } else if (decision == 2) {
+                                solcitudAD.setEstado(EstadoDeSolictud.RECHAZADA);
+                                System.out.println("❌ Solicitud rechazada.");
+                                aprovadaDesaprovda = false;
+                            } else {
+                                System.out.println("⚠️ Opción inválida. No se realizaron cambios.");
+                            }
+                        }
+                    }
                     break;
                 case 10:
+                    methods.ordenarSolicitudesPorNumero(solicitud);
+                    System.out.println("-*-*---------- SELECCIONE LA LISTA QUE DESEA VER EL TOTAL -*-*-----------");
+                    for (int i = 0; i < solicitud.size(); i++) {
+                        System.out.println("Solicitud n° " + (i + 1) + "\n" + solicitud.get(i));
+                    }
+                    int numeroSolicitud2 = leer.nextInt();
+                    SolicitudCompra solcitudTotal = methods.buscarSolicitudesPorNumero(solicitud, numeroSolicitud2);
+                    if (solcitudTotal == null)
+                        System.out.println("⚠️ SOLICITUD NO ENCONTRADA");
+                    else {
+                        System.out.println("✅ SOLICITUD ENCONTRADA: \n " + solcitudTotal);
+                        double totalSolicitud = solcitudTotal.calcularCostoTotal();
+                        System.out.println("TOTAL DE LA SOLICITUD: $" + totalSolicitud);
+                    }
                     break;
                 case 11:
                     continuar = false;

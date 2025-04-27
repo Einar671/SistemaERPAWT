@@ -51,14 +51,15 @@ public class SolicitudCompra implements Calculable {
         this.estado = estado;
     }
 
+    public void addDetalles(int codigo, int cantidad, String observaciones, Producto producto) {
+        DetalleCompra detalle = new DetalleCompra(codigo, cantidad, observaciones, producto);
+        this.detalles.add(detalle);
+    }
+
     public List<DetalleCompra> getDetalles() {
         return detalles;
     }
 
-    public void addDetalles(int codigo, int cantidad, String observaciones, Producto producto) {
-        DetalleCompra detalle = new DetalleCompra();
-        this.detalles.add(detalle);
-    }
 
     public double getTotal() {
         return total;
@@ -92,9 +93,12 @@ public class SolicitudCompra implements Calculable {
 
     @Override
     public double calcularCostoTotal() {
-        for(DetalleCompra detalle: detalles){
-            total += detalle.getSubtotal();
+        total = 0;
+        for (DetalleCompra detalle : detalles) {
+            total += detalle.calcularCostoTotal();
         }
-        return 0;
+        return total;
     }
+
+
 }
