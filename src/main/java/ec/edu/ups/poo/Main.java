@@ -244,9 +244,23 @@ public class Main {
                     }
                     break;
                 case 4:
-                    System.out.println("-*-*---------- LISTA DE PRODUCTOS -*-*-----------");
-                    for (Producto p : proveedor1.getProductos()) {
-                        System.out.println(p);
+                    methods.insertionSortIdentificacion(proveedor);
+                    System.out.println("-*-*---------- LISTA DE PRODUCTOS -*-*-----------");{
+                        for(Proveedor pro : proveedor) {
+                            System.out.println(pro);
+                        }
+                    System.out.println("Elegir el proveedor(Indentificacion) para mostrar sus productos: ");
+                        String opcion2 = leer.nextLine();
+                    Proveedor buscar =methods.buscarProveedorPorIdentificacion(proveedor,opcion2);
+                    if(buscar==null){
+                        System.out.println("El proveedor no existe");
+                    }else{
+                        System.out.println("Productos del proveedor"+ buscar);
+                        for(int i=0;i<buscar.getProductos().size();i++){
+                            System.out.println(buscar.getProductos().get(i));
+                        }
+                    }
+
                     }
                     break;
                 case 5:
