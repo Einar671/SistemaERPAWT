@@ -75,9 +75,9 @@ public class Main {
                                 if (optipo == 1) {
                                     System.out.println("Ingrese el id del producto: ");
                                     int id = leer.nextInt();
+                                    leer.nextLine();
                                     System.out.println("Ingrese el nombre del producto: ");
                                     String nombreProducto = leer.nextLine();
-                                    leer.nextLine();
                                     System.out.println("Ingrese el precio del producto: ");
                                     double precio = leer.nextDouble();
                                     System.out.println("Ingrese el tipo de medida del producto");
@@ -97,9 +97,9 @@ public class Main {
                                 } else if (optipo == 2) {
                                     System.out.println("Ingrese el id del producto: ");
                                     int id = leer.nextInt();
+                                    leer.nextLine();
                                     System.out.println("Ingrese el nombre del producto: ");
                                     String nombreProducto = leer.nextLine();
-                                    leer.nextLine();
                                     System.out.println("Ingrese el precio del producto: ");
                                     double precio = leer.nextDouble();
                                     System.out.println("Ingrese la excension: ");
@@ -122,6 +122,7 @@ public class Main {
                                 } else if (optipo == 3) {
                                     System.out.println("Ingrese el id del producto: ");
                                     int id = leer.nextInt();
+                                    leer.nextLine();
                                     System.out.println("Ingrese el nombre del producto: ");
                                     String nombreProducto = leer.nextLine();
                                     leer.nextLine();
@@ -255,7 +256,7 @@ public class Main {
                             System.out.println(pro);
                         }
                     System.out.println("Elegir el proveedor(Indentificacion) para mostrar sus productos: ");
-                        String opcion2 = leer.nextLine();
+                        String opcion2 = leer.next();
                     Proveedor buscar =methods.buscarProveedorPorIdentificacion(proveedor,opcion2);
                     if(buscar==null){
                         System.out.println("El proveedor no existe");
@@ -277,8 +278,7 @@ public class Main {
                 case 6:
                     System.out.println("-*-*---------- BUSQUEDA POR IDENTIFICACION PROOVEDOR -*-*-----------");
                     System.out.println("INGRESAR LA IDENTIFICACION A BUSCAR: ");
-                    String identificacion = leer.nextLine();
-                    leer.nextLine();
+                    String identificacion = leer.next();
                     methods.insertionSortIdentificacion(proveedor);
                     System.out.println("ORDENANDO IDENTIFICACION PROVEDOR......");
                     Proveedor respuesta = methods.buscarProveedorPorIdentificacion(proveedor, identificacion);
@@ -290,8 +290,9 @@ public class Main {
                 case 7:
                     System.out.println("-*-*---------- BUSQUEDA POR NOMBRE PRODUCTO -*-*-----------");
                     System.out.println("INGRESAR EL NOMBRE PRODUCTO: ");
-                    String nombre = leer.nextLine();
                     leer.nextLine();
+                    String nombre = leer.nextLine();
+
                     methods.ordenarProductosNombre(proveedor1.getProductos());
                     System.out.println("ORDENANDO EL NOMBRE PRODUCTO......");
                     Producto producto = methods.buscarProductoPorNombre(proveedor1.getProductos(), nombre);
