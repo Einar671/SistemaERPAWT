@@ -2,18 +2,18 @@ package ec.edu.ups.poo.clases;
 
 import ec.edu.ups.poo.enums.EstadoDeSolictud;
 import ec.edu.ups.poo.interfaces.Calculable;
-
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Objects;
+import java.text.SimpleDateFormat;
 
 public class SolicitudCompra implements Calculable {
     private int id;
     private GregorianCalendar fecha;
     private EstadoDeSolictud estado;
     private List<DetalleCompra> detalles;
-    private double total;
+
 
     public SolicitudCompra() {
         this.detalles = new ArrayList<>();
@@ -24,7 +24,6 @@ public class SolicitudCompra implements Calculable {
         this.id = id;
         this.fecha = fecha;
         this.estado = estado;
-        this. total = total;
     }
 
     public int getId() {
@@ -60,14 +59,15 @@ public class SolicitudCompra implements Calculable {
         return detalles;
     }
 
-
     public double getTotal() {
-        return total;
+        return calcularCostoTotal(); // Devuelve el total calculado dinámicamente
     }
 
     public EstadoDeSolictud gestionarEstado(EstadoDeSolictud estado){
-        return estado;
+        this.estado = estado;
+        return this.estado;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -83,9 +83,12 @@ public class SolicitudCompra implements Calculable {
 
     @Override
     public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaFormateada = (fecha != null) ? sdf.format(fecha.getTime()) : "Fecha no disponible";
+
         return "SolicitudCompra{" +
                 "id=" + id +
-                ", fecha=" + fecha +
+                ", fecha=" + fechaFormateada +
                 ", estado=" + estado +
                 ", detalles=" + detalles +
                 '}';
@@ -93,12 +96,10 @@ public class SolicitudCompra implements Calculable {
 
     @Override
     public double calcularCostoTotal() {
-        total = 0;
+        double totalCalculado = 0;
         for (DetalleCompra detalle : detalles) {
-            total += detalle.calcularCostoTotal();
+            totalCalculado += detalle.calcularCostoTotal();
         }
-        return total;
+        return totalCalculado;
     }
-
-
 }

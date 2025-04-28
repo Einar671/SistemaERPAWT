@@ -77,11 +77,13 @@ public class Methods {
         return null;
     }
 
-    public void ordenarSolicitudesPorNumero(List<SolicitudCompra> solicitudes){
+    public void ordenarSolicitudesPorNumero(List<SolicitudCompra> solicitudes) {
+
         for (int i = 0; i < solicitudes.size(); i++) {
             int minIdx = i;
             for (int j = i + 1; j < solicitudes.size(); j++) {
-                if (solicitudes.get(j).getId() > solicitudes.get(minIdx).getId()) {
+
+                if (solicitudes.get(j).getId() < solicitudes.get(minIdx).getId()) {
                     minIdx = j;
                 }
             }
@@ -92,17 +94,18 @@ public class Methods {
             }
         }
     }
-    public SolicitudCompra buscarSolicitudesPorNumero(List<SolicitudCompra> solicitudes, int numero){
+
+    public SolicitudCompra buscarSolicitudesPorNumero(List<SolicitudCompra> solicitudes, int numero) {
         int bajo = 0;
         int alto = solicitudes.size() - 1;
-
         while (bajo <= alto) {
             int centro = (alto + bajo) / 2;
             int valorCentral = solicitudes.get(centro).getId();
-            if (valorCentral==numero) {
+
+            if (valorCentral == numero) {
                 return solicitudes.get(centro);
             }
-            if (valorCentral < numero ) {
+            if (valorCentral < numero) {
                 bajo = centro + 1;
             } else {
                 alto = centro - 1;

@@ -1,14 +1,12 @@
 package ec.edu.ups.poo.clases;
 
 import ec.edu.ups.poo.enums.UnidadMedida;
-
 import java.util.Objects;
 
 public class ProductoConIva extends Producto {
     private double porcentajeIVA;
 
     public ProductoConIva() {
-
     }
 
     public ProductoConIva(int id, String nombreProducto, double precioProducto, UnidadMedida unidadMedida, double porcentajeIVA) {
@@ -24,10 +22,10 @@ public class ProductoConIva extends Producto {
         this.porcentajeIVA = porcentajeIVA;
     }
 
-
     @Override
     public double calcularPrecio() {
-        double respuesta = getPrecioProducto()- porcentajeIVA * getPrecioProducto();
+        // Corregido para sumar el IVA al precio base
+        double respuesta = getPrecioProducto() + porcentajeIVA * getPrecioProducto();
         return respuesta;
     }
 
@@ -46,8 +44,13 @@ public class ProductoConIva extends Producto {
 
     @Override
     public String toString() {
+        // Podrías incluir el porcentaje de IVA si es relevante para la representación
         return "ProductoConIva{" +
-                "porcentajeIVA=" + porcentajeIVA +
+                "id=" + getId() + // Incluir atributos de la superclase para mejor visualización
+                ", nombreProducto='" + getNombreProducto() + '\'' +
+                ", precioProducto=" + getPrecioProducto() +
+                ", unidadMedida=" + getUnidadMedida() +
+                ", porcentajeIVA=" + porcentajeIVA +
                 '}';
     }
 }
