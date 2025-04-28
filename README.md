@@ -5,9 +5,9 @@
 -   **Título:** Diseño y desarrollo de una aplicación orientada a objetos utilizando Java
 -   **Asignatura:** Programación Orientada a Objetos
 -   **Carrera:** Computación
--   **Estudiantes:** [Nombre del Estudiante 1], [Nombre del Estudiante 2] (Trabajo en parejas)
--   **Fecha:** [Fecha de Entrega]
--   **Profesor:** [Nombre del Profesor]
+-   **Estudiantes:** Einar Kaalhus, Israel Orellana 
+-   **Fecha:** 28 de abril del 2025
+-   **Profesor:** Gabriel Leon Paredes. PhD
 
 ---
 
