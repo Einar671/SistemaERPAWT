@@ -1,6 +1,5 @@
-package ec.edu.ups.poo.clases;
+package ec.edu.ups.poo.modelo.clases;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 

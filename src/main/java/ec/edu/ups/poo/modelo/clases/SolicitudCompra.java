@@ -1,7 +1,7 @@
-package ec.edu.ups.poo.clases;
+package ec.edu.ups.poo.modelo.clases;
 
-import ec.edu.ups.poo.enums.EstadoDeSolictud;
-import ec.edu.ups.poo.interfaces.Calculable;
+import ec.edu.ups.poo.modelo.enums.EstadoDeSolictud;
+import ec.edu.ups.poo.modelo.interfaces.Calculable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;

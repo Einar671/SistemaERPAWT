@@ -1,8 +1,8 @@
 package ec.edu.ups.poo;
 
-import ec.edu.ups.poo.clases.*;
-import ec.edu.ups.poo.controllers.Methods;
-import ec.edu.ups.poo.enums.*;
+import ec.edu.ups.poo.modelo.clases.*;
+import ec.edu.ups.poo.modelo.controllers.Methods;
+import ec.edu.ups.poo.modelo.enums.*;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;

@@ -1,6 +1,6 @@
-package ec.edu.ups.poo.clases;
+package ec.edu.ups.poo.modelo.clases;
 
-import ec.edu.ups.poo.enums.UnidadMedida;
+import ec.edu.ups.poo.modelo.enums.UnidadMedida;
 
 import java.util.Objects;
 

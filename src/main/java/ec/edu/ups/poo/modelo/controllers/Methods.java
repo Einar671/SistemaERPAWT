@@ -1,8 +1,8 @@
-package ec.edu.ups.poo.controllers;
+package ec.edu.ups.poo.modelo.controllers;
 
-import ec.edu.ups.poo.clases.Producto;
-import ec.edu.ups.poo.clases.Proveedor;
-import ec.edu.ups.poo.clases.SolicitudCompra;
+import ec.edu.ups.poo.modelo.clases.Producto;
+import ec.edu.ups.poo.modelo.clases.Proveedor;
+import ec.edu.ups.poo.modelo.clases.SolicitudCompra;
 
 import java.util.List;
 
