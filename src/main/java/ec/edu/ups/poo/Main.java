@@ -3,6 +3,7 @@ package ec.edu.ups.poo;
 import ec.edu.ups.poo.modelo.clases.*;
 import ec.edu.ups.poo.modelo.controllers.Methods;
 import ec.edu.ups.poo.modelo.enums.*;
+import ec.edu.ups.poo.vista.InicioView;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -21,7 +22,7 @@ public class Main {
         int opcion;
         boolean continuar = true;
 
-        while (continuar) {
+        /*while (continuar) {
             System.out.println("============= SISTEMA DE GESTION DE COMPRAS ERP =============");
             System.out.println("1. Registrar proveedor");
             System.out.println("2. Registrar solicitud de compra");
@@ -528,7 +529,9 @@ public class Main {
                     System.out.println("Opcion no valida");
                     break;
             }
-        }
+        }*/
         leer.close();
+        InicioView inicio = new InicioView();
+        inicio.mostrar();
     }
 }
