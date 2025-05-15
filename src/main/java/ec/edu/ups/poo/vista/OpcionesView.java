@@ -2,10 +2,7 @@ package ec.edu.ups.poo.vista;
 
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 
 public class OpcionesView {
     private Frame ventana;
@@ -91,40 +88,10 @@ public class OpcionesView {
                 inicioView.mostrar();
             }
         });
-        ventana.addWindowListener(new WindowListener() {
-            @Override
-            public void windowOpened(WindowEvent e) {
-
-            }
-
+        ventana.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
-            }
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowIconified(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowDeiconified(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowActivated(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowDeactivated(WindowEvent e) {
-
             }
         });
         rproovedor.addActionListener(new ActionListener() {
@@ -134,6 +101,16 @@ public class OpcionesView {
               ventana.setVisible(false);
               IngresoProovedorView ingresoProvedorView=new IngresoProovedorView();
               ingresoProvedorView.mostrar();
+            }
+        });
+
+        listarprove.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ventana.setVisible(false);
+                ListaProovedoresView listaProvedoresView=new ListaProovedoresView();
+                listaProvedoresView.mostrar();
             }
         });
         ventana.setSize(1000, 400);
