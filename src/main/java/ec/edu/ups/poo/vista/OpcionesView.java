@@ -127,6 +127,15 @@ public class OpcionesView {
             }
         });
 
+        listarprodu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ventana.setVisible(false);
+                ListaDeProductosView listaDeProductosView = new ListaDeProductosView();
+                listaDeProductosView.mostrar();
+            }
+        });
+
         ventana.setSize(1000, 400);
         ventana.setLocationRelativeTo(null);
         ventana.setVisible(true);

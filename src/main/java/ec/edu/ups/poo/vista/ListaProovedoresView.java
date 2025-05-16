@@ -34,8 +34,9 @@ public class ListaProovedoresView extends Frame {
         label = new Label("Lista de provedores", Label.CENTER);
         label.setFont(new Font("Arial", Font.BOLD, 18));
 
-        textArea = new TextArea(20,60);
+        textArea = new TextArea(50,60);
         textArea.setEditable(false);
+        textArea.getScrollbarVisibility();
 
         atras = new Button("Atras");
         ordenar = new Button("Ordenar por identificación");
@@ -54,7 +55,7 @@ public class ListaProovedoresView extends Frame {
 
         mostrarProovedores(listaProovedores);
 
-        setSize(600, 400);
+        setSize(1000, 1000);
         setLocationRelativeTo(null);
         setVisible(true);
         atras.addActionListener(new ActionListener() {
