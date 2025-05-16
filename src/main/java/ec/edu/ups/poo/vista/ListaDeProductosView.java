@@ -40,14 +40,11 @@ public class ListaDeProductosView {
         choiceProveedores = new Choice();
         cargarProveedores();
 
-        // Área de texto para mostrar productos
         txtAreaProductos = new TextArea(15, 50);
         txtAreaProductos.setEditable(false);
 
-        // Botón de regreso
         btnAtras = new Button("Atrás");
 
-        // Añadir componentes a los paneles
         panelProveedores.add(lblProveedor);
         panelProveedores.add(choiceProveedores);
 

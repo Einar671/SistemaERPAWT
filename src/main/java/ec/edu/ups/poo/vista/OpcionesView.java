@@ -17,9 +17,7 @@ public class OpcionesView {
     private Button listarprove;
     private Button listarprodu;
     private Button listarsolicitud;
-    private Button buscarproid;
-    private Button buscarproductonom;
-    private Button buscarsolicitud;
+
     private Button manejarsoli;
     private Button calcular;
 
@@ -42,9 +40,7 @@ public class OpcionesView {
         this.listarprove = listarprove;
         this.listarprodu = listarprodu;
         this.listarsolicitud = listarsolicitud;
-        this.buscarproid = buscarproid;
-        this.buscarproductonom = buscarproductonom;
-        this.buscarsolicitud = buscarsolicitud;
+
         this.manejarsoli = manejarsoli;
         this.calcular = calcular;
     }
@@ -66,9 +62,7 @@ public class OpcionesView {
         listarprove = new Button("LISTAR PROVEEDOR");
         listarprodu = new Button("LISTAR PRODUCTOS");
         listarsolicitud = new Button("LISTAR SOLICITUD");
-        buscarproid = new Button("BUSCAR PROVEEDOR");
-        buscarproductonom = new Button("BUSCAR PRODUCTOS");
-        buscarsolicitud = new Button("BUSCAR SOLICITUD");
+
         manejarsoli = new Button("APROBAR/RECHAZAR SOLICITUD");
         calcular = new Button("CALCULAR TOTAL");
 
@@ -77,9 +71,7 @@ public class OpcionesView {
         panel2.add(listarprove);
         panel2.add(listarprodu);
         panel2.add(listarsolicitud);
-        panel2.add(buscarproid);
-        panel2.add(buscarproductonom);
-        panel2.add(buscarsolicitud);
+
         panel2.add(manejarsoli);
         panel2.add(calcular);
 
@@ -133,6 +125,15 @@ public class OpcionesView {
                 ventana.setVisible(false);
                 ListaDeProductosView listaDeProductosView = new ListaDeProductosView();
                 listaDeProductosView.mostrar();
+            }
+        });
+
+        listarsolicitud.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ListaDeSolicitudView listaDeSolicitudView = new ListaDeSolicitudView();
+                listaDeSolicitudView.mostrar();
             }
         });
 
