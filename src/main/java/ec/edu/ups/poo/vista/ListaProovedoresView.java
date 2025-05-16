@@ -36,7 +36,6 @@ public class ListaProovedoresView extends Frame {
 
         textArea = new TextArea(50,60);
         textArea.setEditable(false);
-        textArea.getScrollbarVisibility();
 
         atras = new Button("Atras");
         ordenar = new Button("Ordenar por identificación");
@@ -55,7 +54,7 @@ public class ListaProovedoresView extends Frame {
 
         mostrarProovedores(listaProovedores);
 
-        setSize(1000, 1000);
+        setSize(600, 600);
         setLocationRelativeTo(null);
         setVisible(true);
         atras.addActionListener(new ActionListener() {
@@ -95,22 +94,17 @@ public class ListaProovedoresView extends Frame {
             textArea.append("No proveedores encontrados");
         }else {
 
-            StringBuilder stringBuilder = new StringBuilder();
-
-            stringBuilder.append(String.format("%-15s %-25s %-25s %-15s %-15s\n",
-                    "INDENTIFIACION", "NOMBRE", "EMAIL", "TELÉFONO", "PRODUCTOS"));
-            stringBuilder.append("--------------------------------------------------\n");
+            textArea.append("Proveedores encontrados:\n");
+            textArea.append("-------------------------------\n");
 
             for (Proveedor proveedor : listaProvedores) {
-                int numProductos = (proveedor.getProductos() != null) ? proveedor.getProductos().size() : 0;
-                stringBuilder.append(String.format("%-15s %-25s %-25s %-15s %-15d\n",
-                        proveedor.getIdentificacion(),
-                        proveedor.getNombre(),
-                        proveedor.getEmail(),
-                        proveedor.getTelefono(),
-                        numProductos));
+                textArea.append("Nombre: "+proveedor.getNombre() + "\n");
+                textArea.append("Indentificacion: "+proveedor.getIdentificacion()+"\n");
+                textArea.append("Telefono: "+ proveedor.getTelefono()+"\n");
+                textArea.append("Email: "+proveedor.getEmail()+"\n");
+                textArea.append("Cantidad de Productos: "+proveedor.getProductos().size()+"\n");
             }
-            textArea.append(stringBuilder.toString());
+
         }
     }
 

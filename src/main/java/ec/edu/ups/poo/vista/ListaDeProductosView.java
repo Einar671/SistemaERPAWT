@@ -25,19 +25,18 @@ public class ListaDeProductosView {
         ventana.setSize(600, 400);
         ventana.setLayout(new BorderLayout());
 
-        // Paneles
+
         panelPrincipal = new Panel(new BorderLayout(10, 10));
         panelProveedores = new Panel(new FlowLayout(FlowLayout.LEFT));
         panelProductos = new Panel(new BorderLayout());
         panelBotones = new Panel(new FlowLayout(FlowLayout.RIGHT));
 
-        // Etiquetas
+
         lblTitulo = new Label("LISTADO DE PRODUCTOS POR PROVEEDOR", Label.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
         lblProveedor = new Label("Seleccione un proveedor: ");
         lblProductos = new Label("Productos:");
 
-        // Choice de proveedores
         choiceProveedores = new Choice();
         cargarProveedores();
 
