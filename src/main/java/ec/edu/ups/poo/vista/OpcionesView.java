@@ -1,10 +1,11 @@
 package ec.edu.ups.poo.vista;
-
-
+import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
-
+import ec.edu.ups.poo.modelo.clases.*;
+import java.util.List;
 public class OpcionesView {
+
     private Frame ventana;
     private Panel panel1;
     private Panel panel2;
@@ -21,7 +22,12 @@ public class OpcionesView {
     private Button buscarsolicitud;
     private Button manejarsoli;
     private Button calcular;
+
+    // Lista para almacenar las solicitudes de compra
+    private static java.util.List<SolicitudCompra> listaSolicitudes = new ArrayList<>();
+
     public OpcionesView() {
+
     }
 
     public OpcionesView(Frame ventana, Panel panel1, Panel panel2, Panel panel3, Button botonatras, Label label1, Button rproovedor, Button rsolicitud, Button listarprove, Button listarprodu, Button listarsolicitud, Button buscarproid, Button buscarproductonom, Button buscarsolicitud, Button manejarsoli, Button calcular) {
@@ -42,10 +48,11 @@ public class OpcionesView {
         this.manejarsoli = manejarsoli;
         this.calcular = calcular;
     }
+
     public void mostrar() {
         ventana = new Frame("Opciones del sistema");
         panel1 = new Panel(new FlowLayout(FlowLayout.CENTER));
-        panel2 = new Panel(new GridLayout(3, 4,10,10));
+        panel2 = new Panel(new GridLayout(3, 4, 10, 10));
         panel3 = new Panel(new FlowLayout());
 
         label1 = new Label("INGRESE UNA OPCIÓN:");
@@ -80,11 +87,10 @@ public class OpcionesView {
         panel1.add(panel2);
         ventana.add(panel1);
         botonatras.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 ventana.setVisible(false);
-                InicioView inicioView=new InicioView();
+                InicioView inicioView = new InicioView();
                 inicioView.mostrar();
             }
         });
@@ -95,28 +101,34 @@ public class OpcionesView {
             }
         });
         rproovedor.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-              ventana.setVisible(false);
-              IngresoProovedorView ingresoProvedorView=new IngresoProovedorView();
-              ingresoProvedorView.mostrar();
+                ventana.setVisible(false);
+                IngresoProovedorView ingresoProovedorView = new IngresoProovedorView();
+                ingresoProovedorView.mostrar();
             }
         });
 
         listarprove.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 ventana.setVisible(false);
-                ListaProovedoresView listaProvedoresView=new ListaProovedoresView();
+                ListaProovedoresView listaProvedoresView = new ListaProovedoresView();
                 listaProvedoresView.mostrar();
             }
         });
+
+        rsolicitud.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ventana.setVisible(false);
+                List<Proveedor> listaProveedores = IngresoProovedorView.getListaProveedores();
+                SolicitudDeCompraView solicitudView = new SolicitudDeCompraView(listaProveedores, listaSolicitudes);
+            }
+        });
+
         ventana.setSize(1000, 400);
         ventana.setLocationRelativeTo(null);
         ventana.setVisible(true);
-
     }
-
 }
