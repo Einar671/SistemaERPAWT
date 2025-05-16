@@ -34,7 +34,7 @@ public class ListaProovedoresView extends Frame {
         label = new Label("Lista de provedores", Label.CENTER);
         label.setFont(new Font("Arial", Font.BOLD, 18));
 
-        textArea = new TextArea(50,60);
+        textArea = new TextArea(10,60);
         textArea.setEditable(false);
 
         atras = new Button("Atras");
