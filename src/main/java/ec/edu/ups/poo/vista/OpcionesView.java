@@ -26,7 +26,8 @@ public class OpcionesView {
     private List<SolicitudCompra> solicitudes;
 
     public OpcionesView() {
-
+        proveedorList = new ArrayList<>();
+        solicitudes = new ArrayList<>();
     }
 
     public OpcionesView(Frame ventana, Panel panel1, Panel panel2, Panel panel3, Button botonatras, Label label1, Button rproovedor, Button rsolicitud, Button listarprove, Button listarprodu, Button listarsolicitud, Button buscarproid, Button buscarproductonom, Button buscarsolicitud, Button manejarsoli, Button calcular) {
@@ -44,11 +45,12 @@ public class OpcionesView {
 
         this.manejarsoli = manejarsoli;
         this.calcular = calcular;
+        proveedorList = new ArrayList<>();
+        solicitudes = new ArrayList<>();
     }
 
     public void mostrar() {
-        proveedorList= new ArrayList<>();
-        solicitudes = new ArrayList<>();
+
         ventana = new Frame("Opciones del sistema");
         panel1 = new Panel(new FlowLayout(FlowLayout.CENTER));
         panel2 = new Panel(new GridLayout(3, 4, 10, 10));
@@ -99,6 +101,7 @@ public class OpcionesView {
             public void actionPerformed(ActionEvent e) {
                 ventana.setVisible(false);
                 RegistrarProveedor rprov = new RegistrarProveedor(proveedorList);
+
             }
         });
 

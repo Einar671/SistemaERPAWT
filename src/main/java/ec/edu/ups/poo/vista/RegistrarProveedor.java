@@ -105,4 +105,8 @@ public class RegistrarProveedor extends Frame {
         telefono1.setText("");
     }
 
+    public List<Proveedor> getProveedorList() {
+        return proveedorList;
+    }
+
 }
