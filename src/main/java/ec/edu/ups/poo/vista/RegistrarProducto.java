@@ -6,26 +6,30 @@ import ec.edu.ups.poo.modelo.enums.UnidadMedida;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
+
 public class RegistrarProducto extends Frame {
 
     private Proveedor proveedor;
     private RegistrarProveedor registrar;
+    private List<Proveedor> proveedorList;
     private Panel panelPrincipal, panelCampos, panelBotones;
     private Label lblId, lblNombre, lblPrecio, lblUnidadMedida, lblTipoProducto, lblCampoExtra;
     private TextField txtId, txtNombre, txtPrecio, txtCampoExtra;
     private Choice choiceUnidadMedida, choiceTipoProducto;
-    private Button btnGuardar, btnCerrar;
+    private Button btnGuardar, btnCerrar, btnFinalizarRegistro;
+    private TextArea productosRegistrados;
 
-
-    public RegistrarProducto(Proveedor proveedor, RegistrarProveedor registrar) {
+    public RegistrarProducto(Proveedor proveedor, RegistrarProveedor registrar, List<Proveedor> proveedorList) {
         super("Registrar Producto");
         this.proveedor = proveedor;
         this.registrar = registrar;
-        setSize(400, 400);
-        setLayout(new BorderLayout());
+        this.proveedorList = proveedorList;
 
-        panelPrincipal = new Panel(new BorderLayout());
-        panelCampos = new Panel(new GridLayout(6, 2, 5, 5));
+        setSize(500, 550);
+        setLayout(new BorderLayout(10, 10));
+
+        panelPrincipal = new Panel(new BorderLayout(10, 10));
+        panelCampos = new Panel(new GridLayout(7, 2, 5, 5));
         panelBotones = new Panel(new FlowLayout());
 
         lblId = new Label("ID:");
@@ -52,6 +56,9 @@ public class RegistrarProducto extends Frame {
         lblCampoExtra = new Label("Porcentaje IVA:");
         txtCampoExtra = new TextField();
 
+        productosRegistrados = new TextArea(5, 50);
+        productosRegistrados.setEditable(false);
+
         panelCampos.add(lblId);
         panelCampos.add(txtId);
         panelCampos.add(lblNombre);
@@ -66,12 +73,15 @@ public class RegistrarProducto extends Frame {
         panelCampos.add(txtCampoExtra);
 
         btnGuardar = new Button("Guardar Producto");
-        btnCerrar = new Button("Cerrar");
+        btnCerrar = new Button("Cancelar");
+        btnFinalizarRegistro = new Button("Finalizar Registro");
 
         panelBotones.add(btnGuardar);
+        panelBotones.add(btnFinalizarRegistro);
         panelBotones.add(btnCerrar);
 
-        panelPrincipal.add(panelCampos, BorderLayout.CENTER);
+        panelPrincipal.add(panelCampos, BorderLayout.NORTH);
+        panelPrincipal.add(productosRegistrados, BorderLayout.CENTER);
         panelPrincipal.add(panelBotones, BorderLayout.SOUTH);
 
         add(panelPrincipal);
@@ -80,7 +90,6 @@ public class RegistrarProducto extends Frame {
         setVisible(true);
 
         btnCerrar.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 registrar.setVisible(true);
@@ -97,7 +106,6 @@ public class RegistrarProducto extends Frame {
         });
 
         choiceTipoProducto.addItemListener(new ItemListener() {
-
             @Override
             public void itemStateChanged(ItemEvent e) {
                 String tipo = choiceTipoProducto.getSelectedItem();
@@ -121,47 +129,113 @@ public class RegistrarProducto extends Frame {
             }
         });
 
-        btnGuardar.addActionListener(new ActionListener(){
-
+        btnGuardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int id = Integer.parseInt(txtId.getText());
-                String nombre = txtNombre.getText();
-                double precio = Double.parseDouble(txtPrecio.getText());
-                UnidadMedida unidadMedida =UnidadMedida.valueOf(choiceUnidadMedida.getSelectedItem());
+                try {
+                    if (txtId.getText().isEmpty() || txtNombre.getText().isEmpty() ||
+                            txtPrecio.getText().isEmpty() || txtCampoExtra.getText().isEmpty()) {
+                        mostrarMensaje("Todos los campos son obligatorios");
+                        return;
+                    }
 
-                String tipo = choiceTipoProducto.getSelectedItem();
-                Producto producto = null;
+                    int id = Integer.parseInt(txtId.getText());
+                    String nombre = txtNombre.getText();
+                    double precio = Double.parseDouble(txtPrecio.getText());
+                    UnidadMedida unidadMedida = UnidadMedida.valueOf(choiceUnidadMedida.getSelectedItem());
 
-                switch (tipo) {
-                    case "Con IVA":
-                        double iva = Double.parseDouble(txtCampoExtra.getText().trim());
-                        producto = new ProductoConIva(id, nombre, precio, unidadMedida, iva);
-                        break;
-                    case "Sin IVA":
-                        String categoria = txtCampoExtra.getText().trim();
-                        producto = new ProductoSinIva(id, nombre, precio, unidadMedida, categoria);
-                        break;
-                    case "Con Descuento":
-                        double descuento = Double.parseDouble(txtCampoExtra.getText().trim());
-                        producto = new ProductoConDescuento(id, nombre, precio, unidadMedida, descuento);
-                        break;
+                    String tipo = choiceTipoProducto.getSelectedItem();
+                    Producto producto = null;
+
+                    switch (tipo) {
+                        case "Con IVA":
+                            double iva = Double.parseDouble(txtCampoExtra.getText().trim());
+                            producto = new ProductoConIva(id, nombre, precio, unidadMedida, iva);
+                            break;
+                        case "Sin IVA":
+                            String categoria = txtCampoExtra.getText().trim();
+                            producto = new ProductoSinIva(id, nombre, precio, unidadMedida, categoria);
+                            break;
+                        case "Con Descuento":
+                            double descuento = Double.parseDouble(txtCampoExtra.getText().trim());
+                            producto = new ProductoConDescuento(id, nombre, precio, unidadMedida, descuento);
+                            break;
+                    }
+
+                    if (producto != null) {
+                        producto.setProveedor(proveedor);
+                        proveedor.getProductos().add(producto);
+                        actualizarListaProductos();
+                        limpiarCampos();
+                        System.out.println("Producto agregado: " + producto);
+                        mostrarMensaje("Producto agregado correctamente");
+                    }
+                } catch (NumberFormatException ex) {
+                    mostrarMensaje("Error en formato de números. Verifique ID, precio o porcentaje");
+                } catch (Exception ex) {
+                    mostrarMensaje("Error al guardar: " + ex.getMessage());
+                }
+            }
+        });
+
+        btnFinalizarRegistro.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (proveedor.getProductos() == null || proveedor.getProductos().isEmpty()) {
+                    mostrarMensaje("Debe agregar al menos un producto");
+                    return;
                 }
 
-                if(producto != null){
-                    producto.setProveedor(proveedor);
-                    proveedor.getProductos().add(producto);
-                    limpiarCampos();
-                    System.out.println("Producto agregado: " + producto);
+                if (!proveedorList.contains(proveedor)) {
+                    proveedorList.add(proveedor);
+                    System.out.println("Proveedor registrado completamente: " + proveedor);
+                    System.out.println("Lista de proveedores actualizada, tamaño: " + proveedorList.size());
+
+                    for (Proveedor p : proveedorList) {
+                        System.out.println("- " + p.getNombre() + " con " +
+                                (p.getProductos() != null ? p.getProductos().size() : 0) +
+                                " productos");
+                    }
+
+                    mostrarMensaje("Proveedor y productos registrados correctamente");
+                    registrar.setVisible(true);
+                    registrar.limpiar();
+                    setVisible(false);
                 }
             }
         });
     }
-    private void limpiarCampos(){
+
+    private void actualizarListaProductos() {
+        productosRegistrados.setText("");
+        if (proveedor.getProductos() != null && !proveedor.getProductos().isEmpty()) {
+            productosRegistrados.append("Productos registrados para " + proveedor.getNombre() + ":\n\n");
+            for (Producto p : proveedor.getProductos()) {
+                productosRegistrados.append("ID: " + p.getId() + " | Nombre: " + p.getNombreProducto() +
+                        " | Precio: $" + p.getPrecioProducto() + " | Tipo: " +
+                        p.getClass().getSimpleName() + "\n");
+            }
+        } else {
+            productosRegistrados.append("No hay productos registrados");
+        }
+    }
+
+    private void mostrarMensaje(String mensaje) {
+        Dialog dialog = new Dialog(this, "Mensaje", true);
+        dialog.setLayout(new FlowLayout());
+        dialog.add(new Label(mensaje));
+        Button okButton = new Button("OK");
+        okButton.addActionListener(e -> dialog.dispose());
+        dialog.add(okButton);
+        dialog.setSize(300, 100);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
+
+    private void limpiarCampos() {
         txtId.setText("");
         txtNombre.setText("");
         txtPrecio.setText("");
         txtCampoExtra.setText("");
     }
-
 }

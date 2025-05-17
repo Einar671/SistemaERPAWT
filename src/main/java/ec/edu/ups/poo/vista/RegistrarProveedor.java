@@ -92,7 +92,7 @@ public class RegistrarProveedor extends Frame {
                 proveedor.setEmail(email1.getText());
                 proveedor.setTelefono(telefono1.getText());
                 proveedorList.add(proveedor);
-                RegistrarProducto registrarProducto = new RegistrarProducto(proveedor,RegistrarProveedor.this);
+                RegistrarProducto registrarProducto = new RegistrarProducto(proveedor,RegistrarProveedor.this,proveedorList);
                 setVisible(false);
                 System.out.println("Proveedor registrado: "+proveedor);
             }
