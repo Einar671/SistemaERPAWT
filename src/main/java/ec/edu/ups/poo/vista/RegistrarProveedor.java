@@ -27,7 +27,7 @@ public class RegistrarProveedor extends Frame {
     private Proveedor proveedor;
     private java.util.List<Proveedor> proveedorList;
 
-    public RegistrarProveedor(List<Proveedor> proveedorList) {
+    public RegistrarProveedor(List<Proveedor> proveedorList,OpcionesView opcionesView) {
         super("Registrar Proveedor");
         this.proveedorList = proveedorList;
         proveedor = new Proveedor();
@@ -71,8 +71,7 @@ public class RegistrarProveedor extends Frame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                OpcionesView op = new OpcionesView();
-                op.mostrar();
+                opcionesView.mostrar();
             }
         });
 

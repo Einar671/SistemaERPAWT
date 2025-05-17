@@ -100,7 +100,7 @@ public class OpcionesView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ventana.setVisible(false);
-                RegistrarProveedor rprov = new RegistrarProveedor(proveedorList);
+                RegistrarProveedor rprov = new RegistrarProveedor(proveedorList, OpcionesView.this);
 
             }
         });
@@ -116,7 +116,7 @@ public class OpcionesView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ventana.setVisible(false);
-                RegistrarSolicitud rs = new RegistrarSolicitud(proveedorList,solicitudes,empleado);
+                RegistrarSolicitud rs = new RegistrarSolicitud(proveedorList,solicitudes,empleado,OpcionesView.this);
             }
         });
 

@@ -44,7 +44,7 @@ public class RegistrarSolicitud extends Frame {
     private List<Producto> productosDisponibles;
     private int codigoDetalle = 1;
 
-    public RegistrarSolicitud(List<Proveedor> proveedorList, List<SolicitudCompra> solicitudesList, Empleado empleado) {
+    public RegistrarSolicitud(List<Proveedor> proveedorList, List<SolicitudCompra> solicitudesList, Empleado empleado, OpcionesView opcionesView) {
         super("Registrar Solicitud de Compra");
 
         this.proveedorList = proveedorList;
@@ -147,7 +147,6 @@ public class RegistrarSolicitud extends Frame {
                     return;
                 }
 
-                try {
                     int cantidad = Integer.parseInt(txtCantidad.getText());
                     if (cantidad <= 0) {
                         mostrarMensaje("La cantidad debe ser mayor a cero");
@@ -170,10 +169,6 @@ public class RegistrarSolicitud extends Frame {
 
                     codigoDetalle++;
                     limpiarCamposDetalle();
-
-                } catch (NumberFormatException ex) {
-                    mostrarMensaje("Ingrese una cantidad válida");
-                }
             }
         });
 
@@ -203,7 +198,6 @@ public class RegistrarSolicitud extends Frame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                OpcionesView opcionesView = new OpcionesView();
                 opcionesView.mostrar();
             }
         });
@@ -253,5 +247,9 @@ public class RegistrarSolicitud extends Frame {
         txtCantidad.setText("");
         txtObservaciones.setText("");
         choiceProducto.select(0);
+    }
+
+    public List<SolicitudCompra> getSolicitud() {
+        return solicitudesList;
     }
 }
