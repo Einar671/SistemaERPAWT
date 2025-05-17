@@ -3,9 +3,11 @@ import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
 import ec.edu.ups.poo.modelo.clases.*;
+import ec.edu.ups.poo.modelo.enums.Cargo;
+
 import java.util.List;
 public class OpcionesView {
-
+    private Empleado empleado = new Empleado("0150204212","Harald Kaalhus","email",new Departamento(), Cargo.AUXILIAR);
     private Frame ventana;
     private Panel panel1;
     private Panel panel2;
@@ -20,9 +22,8 @@ public class OpcionesView {
 
     private Button manejarsoli;
     private Button calcular;
-
-    // Lista para almacenar las solicitudes de compra
-    private static java.util.List<SolicitudCompra> listaSolicitudes = new ArrayList<>();
+    private List<Proveedor> proveedorList;
+    private List<SolicitudCompra> solicitudes;
 
     public OpcionesView() {
 
@@ -46,6 +47,8 @@ public class OpcionesView {
     }
 
     public void mostrar() {
+        proveedorList= new ArrayList<>();
+        solicitudes = new ArrayList<>();
         ventana = new Frame("Opciones del sistema");
         panel1 = new Panel(new FlowLayout(FlowLayout.CENTER));
         panel2 = new Panel(new GridLayout(3, 4, 10, 10));
@@ -62,7 +65,6 @@ public class OpcionesView {
         listarprove = new Button("LISTAR PROVEEDOR");
         listarprodu = new Button("LISTAR PRODUCTOS");
         listarsolicitud = new Button("LISTAR SOLICITUD");
-
         manejarsoli = new Button("APROBAR/RECHAZAR SOLICITUD");
         calcular = new Button("CALCULAR TOTAL");
 
@@ -96,8 +98,7 @@ public class OpcionesView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ventana.setVisible(false);
-                IngresoProovedorView ingresoProovedorView = new IngresoProovedorView();
-                ingresoProovedorView.mostrar();
+                RegistrarProveedor rprov = new RegistrarProveedor(proveedorList);
             }
         });
 
@@ -105,8 +106,6 @@ public class OpcionesView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ventana.setVisible(false);
-                ListaProovedoresView listaProvedoresView = new ListaProovedoresView();
-                listaProvedoresView.mostrar();
             }
         });
 
@@ -114,8 +113,7 @@ public class OpcionesView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ventana.setVisible(false);
-                List<Proveedor> listaProveedores = IngresoProovedorView.getListaProveedores();
-                SolicitudDeCompraView solicitudView = new SolicitudDeCompraView(listaProveedores, listaSolicitudes);
+                RegistrarSolicitud rs = new RegistrarSolicitud(proveedorList,solicitudes,empleado);
             }
         });
 
@@ -123,8 +121,7 @@ public class OpcionesView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ventana.setVisible(false);
-                ListaDeProductosView listaDeProductosView = new ListaDeProductosView();
-                listaDeProductosView.mostrar();
+
             }
         });
 
@@ -132,8 +129,7 @@ public class OpcionesView {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                ListaDeSolicitudView listaDeSolicitudView = new ListaDeSolicitudView();
-                listaDeSolicitudView.mostrar();
+
             }
         });
 

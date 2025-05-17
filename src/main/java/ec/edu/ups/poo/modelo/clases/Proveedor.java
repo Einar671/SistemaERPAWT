@@ -1,10 +1,11 @@
 package ec.edu.ups.poo.modelo.clases;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Proveedor extends Persona {
-    private List<Producto> productos;
+    private List<Producto> productos = new ArrayList<>();
     private String telefono;
 
     public Proveedor() {
