@@ -65,11 +65,17 @@ public class RegistrarSolicitud extends Frame {
 
         lblId = new Label("ID Solicitud:");
         txtId = new TextField(String.valueOf(idSolicitud));
+        txtId.setEditable(false);
 
         lblProveedor = new Label("Seleccione Proveedor:");
         choiceProveedor = new Choice();
         choiceProveedor.add("-- Seleccione --");
+
+        // Depuración - comprobamos la lista de proveedores
+        System.out.println("Número de proveedores disponibles: " + proveedorList.size());
         for (Proveedor p : proveedorList) {
+            System.out.println("Proveedor: " + p.getNombre() + " con " +
+                    (p.getProductos() != null ? p.getProductos().size() : 0) + " productos");
             choiceProveedor.add(p.getNombre());
         }
 
@@ -136,20 +142,25 @@ public class RegistrarSolicitud extends Frame {
         btnAgregarProducto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (choiceProveedor.getSelectedIndex() <= 0) {
-                    areaDetalles.setText("Debe seleccionar un proveedor");
-                    return;
-                }
+                try {
+                    if (choiceProveedor.getSelectedIndex() <= 0) {
+                        mostrarMensaje("Debe seleccionar un proveedor");
+                        return;
+                    }
 
-                if (choiceProducto.getSelectedIndex() <= 0) {
-                    areaDetalles.setText("Debe seleccionar un producto");
-                    return;
-                }
+                    if (choiceProducto.getSelectedIndex() <= 0) {
+                        mostrarMensaje("Debe seleccionar un producto");
+                        return;
+                    }
 
+                    if (txtCantidad.getText().isEmpty()) {
+                        mostrarMensaje("Debe ingresar una cantidad");
+                        return;
+                    }
 
                     int cantidad = Integer.parseInt(txtCantidad.getText());
                     if (cantidad <= 0) {
-                        areaDetalles.setText("La cantidad debe ser mayor a cero");
+                        mostrarMensaje("La cantidad debe ser mayor a cero");
                         return;
                     }
 
@@ -169,16 +180,19 @@ public class RegistrarSolicitud extends Frame {
 
                     codigoDetalle++;
                     limpiarCamposDetalle();
-
-
+                } catch (NumberFormatException ex) {
+                    mostrarMensaje("Error en formato de cantidad. Ingrese un número válido.");
+                } catch (Exception ex) {
+                    mostrarMensaje("Error al agregar producto: " + ex.getMessage());
+                }
             }
         });
 
         btnGuardarSolicitud.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (solicitud.getDetalles().isEmpty()) {
-                    areaDetalles.setText("\n Debe agregar al menos un producto a la solicitud");
+                if (solicitud.getDetalles() == null || solicitud.getDetalles().isEmpty()) {
+                    mostrarMensaje("Debe agregar al menos un producto a la solicitud");
                     return;
                 }
 
@@ -188,7 +202,7 @@ public class RegistrarSolicitud extends Frame {
                 solicitudesList.add(solicitud);
                 empleado.addSolicitudes(solicitud);
 
-                areaDetalles.setText("\n Solicitud #" + solicitud.getId() + " guardada con éxito. Total: $" + total);
+                mostrarMensaje("Solicitud #" + solicitud.getId() + " guardada con éxito. Total: $" + total);
 
                 setVisible(false);
                 opcionesView.mostrar();
@@ -223,19 +237,35 @@ public class RegistrarSolicitud extends Frame {
         productosDisponibles.clear();
 
         if (proveedor != null && proveedor.getProductos() != null && !proveedor.getProductos().isEmpty()) {
+            System.out.println("Actualizando productos para proveedor: " + proveedor.getNombre());
+            System.out.println("Número de productos: " + proveedor.getProductos().size());
+
             for (Producto p : proveedor.getProductos()) {
                 choiceProducto.add(p.getNombreProducto() + " - $" + p.getPrecioProducto());
                 productosDisponibles.add(p);
+                System.out.println("Producto añadido: " + p.getNombreProducto());
             }
         } else {
+            System.out.println("No hay productos disponibles para este proveedor");
             choiceProducto.add("No hay productos disponibles");
         }
     }
-
 
     private void limpiarCamposDetalle() {
         txtCantidad.setText("");
         txtObservaciones.setText("");
         choiceProducto.select(0);
+    }
+
+    private void mostrarMensaje(String mensaje) {
+        Dialog dialog = new Dialog(this, "Mensaje", true);
+        dialog.setLayout(new FlowLayout());
+        dialog.add(new Label(mensaje));
+        Button okButton = new Button("OK");
+        okButton.addActionListener(e -> dialog.dispose());
+        dialog.add(okButton);
+        dialog.setSize(300, 100);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 }

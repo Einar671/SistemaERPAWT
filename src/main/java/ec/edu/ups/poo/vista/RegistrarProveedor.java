@@ -26,11 +26,14 @@ public class RegistrarProveedor extends Frame {
 
     private Proveedor proveedor;
     private java.util.List<Proveedor> proveedorList;
+    private OpcionesView opcionesView;
 
-    public RegistrarProveedor(List<Proveedor> proveedorList,OpcionesView opcionesView) {
+    public RegistrarProveedor(List<Proveedor> proveedorList, OpcionesView opcionesView) {
         super("Registrar Proveedor");
         this.proveedorList = proveedorList;
-        proveedor = new Proveedor();
+        this.opcionesView = opcionesView;
+
+        // No inicializamos el proveedor aquí, lo haremos cuando sea necesario
 
         panel1 = new Panel();
         panel2 = new Panel(new GridLayout(9, 1,5,5));
@@ -67,7 +70,6 @@ public class RegistrarProveedor extends Frame {
         setVisible(true);
 
         atras.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
@@ -80,23 +82,28 @@ public class RegistrarProveedor extends Frame {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
-
         });
 
         ingresarpro.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Creamos un nuevo objeto Proveedor cada vez
+                proveedor = new Proveedor();
                 proveedor.setIdentificacion(iden1.getText());
                 proveedor.setNombre(nombre1.getText());
                 proveedor.setEmail(email1.getText());
                 proveedor.setTelefono(telefono1.getText());
-                proveedorList.add(proveedor);
-                RegistrarProducto registrarProducto = new RegistrarProducto(proveedor,RegistrarProveedor.this,proveedorList);
+
+                // Quitamos la adición a la lista aquí, ya que se hará en RegistrarProducto
+                // después de agregar los productos
+
+                RegistrarProducto registrarProducto = new RegistrarProducto(proveedor, RegistrarProveedor.this, proveedorList);
                 setVisible(false);
-                System.out.println("Proveedor registrado: "+proveedor);
+                System.out.println("Proveedor creado: " + proveedor);
             }
         });
     }
+
     public void limpiar(){
         iden1.setText("");
         nombre1.setText("");
@@ -107,5 +114,4 @@ public class RegistrarProveedor extends Frame {
     public List<Proveedor> getProveedorList() {
         return proveedorList;
     }
-
 }

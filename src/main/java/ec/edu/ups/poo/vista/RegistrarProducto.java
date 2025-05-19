@@ -5,6 +5,7 @@ import ec.edu.ups.poo.modelo.enums.UnidadMedida;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RegistrarProducto extends Frame {
@@ -24,6 +25,11 @@ public class RegistrarProducto extends Frame {
         this.proveedor = proveedor;
         this.registrar = registrar;
         this.proveedorList = proveedorList;
+
+        // Aseguramos que el proveedor tenga una lista de productos inicializada
+        if (proveedor.getProductos() == null) {
+            proveedor.setProductos(new ArrayList<>());
+        }
 
         setSize(500, 550);
         setLayout(new BorderLayout(10, 10));
@@ -186,7 +192,16 @@ public class RegistrarProducto extends Frame {
                     return;
                 }
 
-                if (!proveedorList.contains(proveedor)) {
+                // Solo añadimos el proveedor a la lista si no existe ya
+                boolean proveedorExistente = false;
+                for (Proveedor p : proveedorList) {
+                    if (p.getIdentificacion().equals(proveedor.getIdentificacion())) {
+                        proveedorExistente = true;
+                        break;
+                    }
+                }
+
+                if (!proveedorExistente) {
                     proveedorList.add(proveedor);
                     System.out.println("Proveedor registrado completamente: " + proveedor);
                     System.out.println("Lista de proveedores actualizada, tamaño: " + proveedorList.size());
@@ -201,9 +216,14 @@ public class RegistrarProducto extends Frame {
                     registrar.setVisible(true);
                     registrar.limpiar();
                     setVisible(false);
+                } else {
+                    mostrarMensaje("Proveedor ya existe en el sistema");
                 }
             }
         });
+
+        // Actualizamos la lista de productos inicialmente
+        actualizarListaProductos();
     }
 
     private void actualizarListaProductos() {
