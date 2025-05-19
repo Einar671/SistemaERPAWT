@@ -65,7 +65,6 @@ public class RegistrarSolicitud extends Frame {
 
         lblId = new Label("ID Solicitud:");
         txtId = new TextField(String.valueOf(idSolicitud));
-        txtId.setEditable(false);
 
         lblProveedor = new Label("Seleccione Proveedor:");
         choiceProveedor = new Choice();
@@ -138,18 +137,19 @@ public class RegistrarSolicitud extends Frame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (choiceProveedor.getSelectedIndex() <= 0) {
-                    mostrarMensaje("Debe seleccionar un proveedor");
+                    areaDetalles.setText("Debe seleccionar un proveedor");
                     return;
                 }
 
                 if (choiceProducto.getSelectedIndex() <= 0) {
-                    mostrarMensaje("Debe seleccionar un producto");
+                    areaDetalles.setText("Debe seleccionar un producto");
                     return;
                 }
 
+
                     int cantidad = Integer.parseInt(txtCantidad.getText());
                     if (cantidad <= 0) {
-                        mostrarMensaje("La cantidad debe ser mayor a cero");
+                        areaDetalles.setText("La cantidad debe ser mayor a cero");
                         return;
                     }
 
@@ -169,6 +169,8 @@ public class RegistrarSolicitud extends Frame {
 
                     codigoDetalle++;
                     limpiarCamposDetalle();
+
+
             }
         });
 
@@ -176,7 +178,7 @@ public class RegistrarSolicitud extends Frame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (solicitud.getDetalles().isEmpty()) {
-                    mostrarMensaje("Debe agregar al menos un producto a la solicitud");
+                    areaDetalles.setText("\n Debe agregar al menos un producto a la solicitud");
                     return;
                 }
 
@@ -186,10 +188,9 @@ public class RegistrarSolicitud extends Frame {
                 solicitudesList.add(solicitud);
                 empleado.addSolicitudes(solicitud);
 
-                mostrarMensaje("Solicitud #" + solicitud.getId() + " guardada con éxito. Total: $" + total);
+                areaDetalles.setText("\n Solicitud #" + solicitud.getId() + " guardada con éxito. Total: $" + total);
 
                 setVisible(false);
-                OpcionesView opcionesView = new OpcionesView();
                 opcionesView.mostrar();
             }
         });
@@ -231,25 +232,10 @@ public class RegistrarSolicitud extends Frame {
         }
     }
 
-    private void mostrarMensaje(String mensaje) {
-        Dialog dialog = new Dialog(this, "Mensaje", true);
-        dialog.setLayout(new FlowLayout());
-        dialog.add(new Label(mensaje));
-        Button okButton = new Button("OK");
-        okButton.addActionListener(e -> dialog.dispose());
-        dialog.add(okButton);
-        dialog.setSize(300, 100);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }
 
     private void limpiarCamposDetalle() {
         txtCantidad.setText("");
         txtObservaciones.setText("");
         choiceProducto.select(0);
-    }
-
-    public List<SolicitudCompra> getSolicitud() {
-        return solicitudesList;
     }
 }
