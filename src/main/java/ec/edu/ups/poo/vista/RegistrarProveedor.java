@@ -33,7 +33,6 @@ public class RegistrarProveedor extends Frame {
         this.proveedorList = proveedorList;
         this.opcionesView = opcionesView;
 
-        // No inicializamos el proveedor aquí, lo haremos cuando sea necesario
 
         panel1 = new Panel();
         panel2 = new Panel(new GridLayout(9, 1,5,5));
@@ -94,8 +93,6 @@ public class RegistrarProveedor extends Frame {
                 proveedor.setEmail(email1.getText());
                 proveedor.setTelefono(telefono1.getText());
 
-                // Quitamos la adición a la lista aquí, ya que se hará en RegistrarProducto
-                // después de agregar los productos
 
                 RegistrarProducto registrarProducto = new RegistrarProducto(proveedor, RegistrarProveedor.this, proveedorList);
                 setVisible(false);

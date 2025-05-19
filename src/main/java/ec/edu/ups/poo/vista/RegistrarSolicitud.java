@@ -71,7 +71,6 @@ public class RegistrarSolicitud extends Frame {
         choiceProveedor = new Choice();
         choiceProveedor.add("-- Seleccione --");
 
-        // Depuración - comprobamos la lista de proveedores
         System.out.println("Número de proveedores disponibles: " + proveedorList.size());
         for (Proveedor p : proveedorList) {
             System.out.println("Proveedor: " + p.getNombre() + " con " +

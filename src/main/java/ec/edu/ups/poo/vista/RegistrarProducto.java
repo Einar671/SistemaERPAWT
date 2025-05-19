@@ -192,7 +192,6 @@ public class RegistrarProducto extends Frame {
                     return;
                 }
 
-                // Solo añadimos el proveedor a la lista si no existe ya
                 boolean proveedorExistente = false;
                 for (Proveedor p : proveedorList) {
                     if (p.getIdentificacion().equals(proveedor.getIdentificacion())) {
