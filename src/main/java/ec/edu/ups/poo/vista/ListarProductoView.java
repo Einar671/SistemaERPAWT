@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ListarProductoView extends Frame {
 
-    private List<Proveedor> proveedorList; // Necesitamos la lista de proveedores para acceder a sus productos
+    private List<Proveedor> proveedorList;
     private OpcionesView opcionesView;
     private TextArea displayArea;
     private Button btnBack;
@@ -21,6 +21,7 @@ public class ListarProductoView extends Frame {
         setSize(700, 500);
         setLayout(new BorderLayout());
 
+
         displayArea = new TextArea();
         displayArea.setEditable(false);
         add(displayArea, BorderLayout.CENTER);
@@ -28,7 +29,7 @@ public class ListarProductoView extends Frame {
         btnBack = new Button("Volver");
         add(btnBack, BorderLayout.SOUTH);
 
-        displayProductos(); // Llama al método para mostrar los productos
+        displayProductos();
 
         btnBack.addActionListener(new ActionListener() {
             @Override
@@ -49,7 +50,6 @@ public class ListarProductoView extends Frame {
         setVisible(true);
     }
 
-    // Método para obtener y mostrar la información de los productos
     private void displayProductos() {
         if (proveedorList.isEmpty()) {
             displayArea.setText("No hay proveedores registrados, por lo tanto, no hay productos.");
@@ -59,7 +59,7 @@ public class ListarProductoView extends Frame {
         String textoCompleto = "";
         textoCompleto = textoCompleto + "--- LISTADO DE PRODUCTOS POR PROVEEDOR ---\n\n";
 
-        boolean anyProducts = false; // Bandera para saber si hay algún producto en total
+        boolean anyProducts = false;
         for (Proveedor p : proveedorList) {
             textoCompleto = textoCompleto + "PROVEEDOR: " + p.getNombre() + " (ID: " + p.getIdentificacion() + ")\n";
             if (p.getProductos() == null || p.getProductos().isEmpty()) {
@@ -77,7 +77,6 @@ public class ListarProductoView extends Frame {
             textoCompleto = textoCompleto + "--------------------------------------------------\n\n";
         }
 
-        // Si no se encontró ningún producto en ningún proveedor
         if (!anyProducts) {
             displayArea.setText("No hay productos registrados en ningún proveedor.");
         } else {
