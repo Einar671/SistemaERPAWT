@@ -86,7 +86,6 @@ public class RegistrarProveedor extends Frame {
         ingresarpro.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Creamos un nuevo objeto Proveedor cada vez
                 proveedor = new Proveedor();
                 proveedor.setIdentificacion(iden1.getText());
                 proveedor.setNombre(nombre1.getText());

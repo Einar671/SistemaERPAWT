@@ -44,9 +44,9 @@ public class ProductoConIva extends Producto {
 
     @Override
     public String toString() {
-        // Podrías incluir el porcentaje de IVA si es relevante para la representación
+
         return "ProductoConIva{" +
-                "id=" + getId() + // Incluir atributos de la superclase para mejor visualización
+                "id=" + getId() +
                 ", nombreProducto='" + getNombreProducto() + '\'' +
                 ", precioProducto=" + getPrecioProducto() +
                 ", unidadMedida=" + getUnidadMedida() +

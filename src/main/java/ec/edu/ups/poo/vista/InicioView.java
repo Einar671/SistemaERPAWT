@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class InicioView {
+
     private Frame ventanaPrincipal;
     private Panel ventanaPrincipalPanel;
     private Panel ventanaSolicitudPanel;

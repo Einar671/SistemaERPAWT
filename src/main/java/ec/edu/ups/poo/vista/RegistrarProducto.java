@@ -26,7 +26,6 @@ public class RegistrarProducto extends Frame {
         this.registrar = registrar;
         this.proveedorList = proveedorList;
 
-        // Aseguramos que el proveedor tenga una lista de productos inicializada
         if (proveedor.getProductos() == null) {
             proveedor.setProductos(new ArrayList<>());
         }
@@ -221,7 +220,7 @@ public class RegistrarProducto extends Frame {
             }
         });
 
-        // Actualizamos la lista de productos inicialmente
+
         actualizarListaProductos();
     }
 
