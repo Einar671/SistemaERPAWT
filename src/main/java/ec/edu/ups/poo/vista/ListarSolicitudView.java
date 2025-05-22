@@ -132,7 +132,7 @@ public class ListarSolicitudView extends Frame {
                         Button btnRechazar = new Button("Rechazar");
 
                         btnAceptar.addActionListener(ev -> {
-                            solicitudCompraEncontrada.setEstado(EstadoDeSolictud.APROVADA);
+                            solicitudCompraEncontrada.setEstado(EstadoDeSolictud.APROBADA);
                             mostrarMensaje("Solicitud aprobada");
                             frame.dispose();
                             displayArea.setText("");

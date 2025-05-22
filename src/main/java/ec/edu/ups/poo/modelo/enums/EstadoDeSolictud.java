@@ -2,6 +2,6 @@ package ec.edu.ups.poo.modelo.enums;
 
 public enum EstadoDeSolictud {
     EN_REVISION,
-    APROVADA,
+    APROBADA,
     RECHAZADA,
 }
