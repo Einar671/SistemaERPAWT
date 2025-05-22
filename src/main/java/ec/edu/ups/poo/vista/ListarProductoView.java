@@ -46,7 +46,6 @@ public class ListarProductoView extends Frame {
         add(btnBack, BorderLayout.SOUTH);
 
         displayProductos();
-
         btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,6 +61,7 @@ public class ListarProductoView extends Frame {
             }
         });
 
+
         btnBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -69,7 +69,6 @@ public class ListarProductoView extends Frame {
 
                 if (nombreBusqueda.isEmpty()) {
                     mostrarMensaje("Por favor, ingrese el nombre del producto a buscar.");
-                    displayProductos();
                     return;
                 }
 
@@ -87,10 +86,9 @@ public class ListarProductoView extends Frame {
 
                 if (productoEncontrado == null) {
                     mostrarMensaje("Producto con nombre '" + nombreBusqueda + "' no encontrado.");
-                    displayArea.setText("No se encontró ningún producto con el nombre: " + nombreBusqueda);
                 } else {
 
-                    mostrarDetalleProducto(productoEncontrado);
+                    mostrarDetalleProductoEnNuevaVentana(productoEncontrado);
                 }
             }
         });
@@ -133,10 +131,18 @@ public class ListarProductoView extends Frame {
         }
     }
 
+    // --- NUEVO MÉTODO: Muestra el detalle del producto en una ventana nueva ---
+    private void mostrarDetalleProductoEnNuevaVentana(Producto p) {
+        Frame detalleFrame = new Frame("Detalle de Producto: " + p.getNombreProducto());
+        detalleFrame.setSize(500, 300);
+        detalleFrame.setLayout(new BorderLayout());
 
-    private void mostrarDetalleProducto(Producto p) {
+        TextArea detalleArea = new TextArea();
+        detalleArea.setEditable(false);
+        detalleFrame.add(detalleArea, BorderLayout.CENTER);
+
         String textoDetalle = "";
-        textoDetalle = textoDetalle + "--- PRODUCTO ENCONTRADO ---\n\n";
+        textoDetalle = textoDetalle + "--- DETALLE DEL PRODUCTO ---\n\n";
         textoDetalle = textoDetalle + "  ID: " + p.getId() + "\n";
         textoDetalle = textoDetalle + "  Nombre: " + p.getNombreProducto() + "\n";
         textoDetalle = textoDetalle + "  Precio: $" + String.format("%.2f", p.getPrecioProducto()) + "\n";
@@ -144,7 +150,24 @@ public class ListarProductoView extends Frame {
         textoDetalle = textoDetalle + "  Tipo: " + p.getClass().getSimpleName() + "\n";
         textoDetalle = textoDetalle + "  Proveedor: " + (p.getProveedor() != null ? p.getProveedor().getNombre() : "N/A") + "\n";
         textoDetalle = textoDetalle + "  -------------------------------------\n";
-        displayArea.setText(textoDetalle);
+        detalleArea.setText(textoDetalle);
+
+        Button cerrarButton = new Button("Cerrar");
+        cerrarButton.addActionListener(e -> detalleFrame.dispose()); // Cierra solo esta ventana
+
+        Panel botonPanel = new Panel(new FlowLayout(FlowLayout.RIGHT));
+        botonPanel.add(cerrarButton);
+        detalleFrame.add(botonPanel, BorderLayout.SOUTH);
+
+        detalleFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                detalleFrame.dispose();
+            }
+        });
+
+        detalleFrame.setLocationRelativeTo(this);
+        detalleFrame.setVisible(true);
     }
 
     private void mostrarMensaje(String mensaje) {

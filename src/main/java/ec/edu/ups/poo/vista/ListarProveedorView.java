@@ -26,7 +26,7 @@ public class ListarProveedorView extends Frame {
         setSize(700, 500);
         setLayout(new BorderLayout());
 
-
+        // Panel superior para la búsqueda
         Panel panelBusqueda = new Panel(new FlowLayout());
         lblIdProveedor = new Label("ID Proveedor:");
         txtIdProveedor = new TextField(15);
@@ -71,20 +71,19 @@ public class ListarProveedorView extends Frame {
 
                 if (idBusqueda.isEmpty()) {
                     mostrarMensaje("Por favor, ingrese la ID del proveedor a buscar.");
-                    displayProveedores();
                     return;
                 }
 
-                methods.insertionSortIdentificacion(proveedorList);
 
+                methods.insertionSortIdentificacion(proveedorList);
 
                 Proveedor proveedorEncontrado = methods.buscarProveedorPorIdentificacion(proveedorList, idBusqueda);
 
                 if (proveedorEncontrado == null) {
                     mostrarMensaje("Proveedor con ID '" + idBusqueda + "' no encontrado.");
-                    displayArea.setText("No se encontró ningún proveedor con la ID: " + idBusqueda);
                 } else {
-                    mostrarDetalleProveedor(proveedorEncontrado);
+
+                    mostrarDetalleProveedorEnNuevaVentana(proveedorEncontrado);
                 }
             }
         });
@@ -112,9 +111,17 @@ public class ListarProveedorView extends Frame {
     }
 
 
-    private void mostrarDetalleProveedor(Proveedor p) {
+    private void mostrarDetalleProveedorEnNuevaVentana(Proveedor p) {
+        Frame detalleFrame = new Frame("Detalle de Proveedor: " + p.getNombre());
+        detalleFrame.setSize(500, 350);
+        detalleFrame.setLayout(new BorderLayout());
+
+        TextArea detalleArea = new TextArea();
+        detalleArea.setEditable(false);
+        detalleFrame.add(detalleArea, BorderLayout.CENTER);
+
         String textoDetalle = "";
-        textoDetalle = textoDetalle + "--- DETALLE DEL PROVEEDOR ENCONTRADO ---\n\n";
+        textoDetalle = textoDetalle + "--- DETALLE DEL PROVEEDOR ---\n\n";
         textoDetalle = textoDetalle + "Identificación: " + p.getIdentificacion() + "\n";
         textoDetalle = textoDetalle + "Nombre: " + p.getNombre() + "\n";
         textoDetalle = textoDetalle + "Email: " + p.getEmail() + "\n";
@@ -123,16 +130,31 @@ public class ListarProveedorView extends Frame {
         if (p.getProductos() == null || p.getProductos().isEmpty()) {
             textoDetalle = textoDetalle + "  - No tiene productos registrados.\n";
         } else {
-
             for (int i = 0; i < p.getProductos().size(); i++) {
                 textoDetalle = textoDetalle + "    " + (i + 1) + ". " + p.getProductos().get(i).getNombreProducto() + " (ID: " + p.getProductos().get(i).getId() + ")\n";
             }
         }
         textoDetalle = textoDetalle + "--------------------------------------\n";
-        displayArea.setText(textoDetalle);
+        detalleArea.setText(textoDetalle);
+
+        Button cerrarButton = new Button("Cerrar");
+        cerrarButton.addActionListener(e -> detalleFrame.dispose());
+
+        Panel botonPanel = new Panel(new FlowLayout(FlowLayout.RIGHT));
+        botonPanel.add(cerrarButton);
+        detalleFrame.add(botonPanel, BorderLayout.SOUTH);
+
+        detalleFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                detalleFrame.dispose();
+            }
+        });
+
+        detalleFrame.setLocationRelativeTo(this);
+        detalleFrame.setVisible(true);
     }
 
-    // Método para mostrar mensajes en un diálogo simple
     private void mostrarMensaje(String mensaje) {
         Dialog dialog = new Dialog(this, "Mensaje", true);
         dialog.setLayout(new FlowLayout());
