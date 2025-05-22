@@ -2,24 +2,41 @@ package ec.edu.ups.poo.vista;
 
 import ec.edu.ups.poo.modelo.clases.Producto;
 import ec.edu.ups.poo.modelo.clases.Proveedor;
+import ec.edu.ups.poo.modelo.controllers.Methods;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
+import java.util.ArrayList;
 
 public class ListarProductoView extends Frame {
 
-    private List<Proveedor> proveedorList; // Necesitamos la lista de proveedores para acceder a sus productos
+    private List<Proveedor> proveedorList;
     private OpcionesView opcionesView;
     private TextArea displayArea;
     private Button btnBack;
+    private Button btnBuscar;
+    private TextField txtNombreProducto;
+    private Label lblNombreProducto;
+    private Methods methods;
 
     public ListarProductoView(List<Proveedor> proveedorList, OpcionesView opcionesView) {
-        super("Listado de Productos por Proveedor");
+        super("Listado y Búsqueda de Productos");
         this.proveedorList = proveedorList;
         this.opcionesView = opcionesView;
+        this.methods = new Methods();
 
         setSize(700, 500);
         setLayout(new BorderLayout());
+
+
+        Panel panelBusqueda = new Panel(new FlowLayout());
+        lblNombreProducto = new Label("Nombre Producto:");
+        txtNombreProducto = new TextField(20);
+        btnBuscar = new Button("Buscar");
+        panelBusqueda.add(lblNombreProducto);
+        panelBusqueda.add(txtNombreProducto);
+        panelBusqueda.add(btnBuscar);
+        add(panelBusqueda, BorderLayout.NORTH);
 
         displayArea = new TextArea();
         displayArea.setEditable(false);
@@ -28,7 +45,7 @@ public class ListarProductoView extends Frame {
         btnBack = new Button("Volver");
         add(btnBack, BorderLayout.SOUTH);
 
-        displayProductos(); // Llama al método para mostrar los productos
+        displayProductos();
 
         btnBack.addActionListener(new ActionListener() {
             @Override
@@ -45,11 +62,43 @@ public class ListarProductoView extends Frame {
             }
         });
 
+        btnBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nombreBusqueda = txtNombreProducto.getText().trim();
+
+                if (nombreBusqueda.isEmpty()) {
+                    mostrarMensaje("Por favor, ingrese el nombre del producto a buscar.");
+                    displayProductos();
+                    return;
+                }
+
+                List<Producto> todosLosProductos = new ArrayList<>();
+                for (Proveedor p : proveedorList) {
+                    if (p.getProductos() != null) {
+                        todosLosProductos.addAll(p.getProductos());
+                    }
+                }
+
+
+                methods.ordenarProductosNombre(todosLosProductos);
+
+                Producto productoEncontrado = methods.buscarProductoPorNombre(todosLosProductos, nombreBusqueda);
+
+                if (productoEncontrado == null) {
+                    mostrarMensaje("Producto con nombre '" + nombreBusqueda + "' no encontrado.");
+                    displayArea.setText("No se encontró ningún producto con el nombre: " + nombreBusqueda);
+                } else {
+
+                    mostrarDetalleProducto(productoEncontrado);
+                }
+            }
+        });
+
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
-    // Método para obtener y mostrar la información de los productos
     private void displayProductos() {
         if (proveedorList.isEmpty()) {
             displayArea.setText("No hay proveedores registrados, por lo tanto, no hay productos.");
@@ -59,29 +108,54 @@ public class ListarProductoView extends Frame {
         String textoCompleto = "";
         textoCompleto = textoCompleto + "--- LISTADO DE PRODUCTOS POR PROVEEDOR ---\n\n";
 
-        boolean anyProducts = false; // Bandera para saber si hay algún producto en total
+        boolean anyProducts = false;
         for (Proveedor p : proveedorList) {
             textoCompleto = textoCompleto + "PROVEEDOR: " + p.getNombre() + " (ID: " + p.getIdentificacion() + ")\n";
             if (p.getProductos() == null || p.getProductos().isEmpty()) {
                 textoCompleto = textoCompleto + "  - No tiene productos registrados.\n";
             } else {
-                anyProducts = true; // Sí hay productos
+                anyProducts = true;
                 for (Producto prod : p.getProductos()) {
                     textoCompleto = textoCompleto + "    ID: " + prod.getId() + " | ";
                     textoCompleto = textoCompleto + "Nombre: " + prod.getNombreProducto() + " | ";
                     textoCompleto = textoCompleto + "Precio: $" + String.format("%.2f", prod.getPrecioProducto()) + " | ";
                     textoCompleto = textoCompleto + "Unidad: " + prod.getUnidadMedida() + " | ";
-                    textoCompleto = textoCompleto + "Tipo: " + prod.getClass().getSimpleName() + "\n"; // Muestra si es ConIva, SinIva, etc.
+                    textoCompleto = textoCompleto + "Tipo: " + prod.getClass().getSimpleName() + "\n";
                 }
             }
             textoCompleto = textoCompleto + "--------------------------------------------------\n\n";
         }
 
-        // Si no se encontró ningún producto en ningún proveedor
-        if (!anyProducts) {
+        if (!anyProducts && displayArea.getText().isEmpty()) {
             displayArea.setText("No hay productos registrados en ningún proveedor.");
         } else {
             displayArea.setText(textoCompleto);
         }
+    }
+
+
+    private void mostrarDetalleProducto(Producto p) {
+        String textoDetalle = "";
+        textoDetalle = textoDetalle + "--- PRODUCTO ENCONTRADO ---\n\n";
+        textoDetalle = textoDetalle + "  ID: " + p.getId() + "\n";
+        textoDetalle = textoDetalle + "  Nombre: " + p.getNombreProducto() + "\n";
+        textoDetalle = textoDetalle + "  Precio: $" + String.format("%.2f", p.getPrecioProducto()) + "\n";
+        textoDetalle = textoDetalle + "  Unidad: " + p.getUnidadMedida() + "\n";
+        textoDetalle = textoDetalle + "  Tipo: " + p.getClass().getSimpleName() + "\n";
+        textoDetalle = textoDetalle + "  Proveedor: " + (p.getProveedor() != null ? p.getProveedor().getNombre() : "N/A") + "\n";
+        textoDetalle = textoDetalle + "  -------------------------------------\n";
+        displayArea.setText(textoDetalle);
+    }
+
+    private void mostrarMensaje(String mensaje) {
+        Dialog dialog = new Dialog(this, "Mensaje", true);
+        dialog.setLayout(new FlowLayout());
+        dialog.add(new Label(mensaje));
+        Button okButton = new Button("OK");
+        okButton.addActionListener(e -> dialog.dispose());
+        dialog.add(okButton);
+        dialog.setSize(300, 100);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 }
