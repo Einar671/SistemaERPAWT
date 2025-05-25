@@ -40,7 +40,7 @@ public class InicioView {
         botonInicio.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ventanaPrincipal.setVisible(false); // opcional: esconder ventana actual
+                ventanaPrincipal.setVisible(false);
                 OpcionesView opciones = new OpcionesView();
                 opciones.mostrar();
             }

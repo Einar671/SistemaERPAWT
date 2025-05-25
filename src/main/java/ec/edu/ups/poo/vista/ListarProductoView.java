@@ -131,7 +131,7 @@ public class ListarProductoView extends Frame {
         }
     }
 
-    // --- NUEVO MÉTODO: Muestra el detalle del producto en una ventana nueva ---
+
     private void mostrarDetalleProductoEnNuevaVentana(Producto p) {
         Frame detalleFrame = new Frame("Detalle de Producto: " + p.getNombreProducto());
         detalleFrame.setSize(500, 300);
@@ -153,7 +153,7 @@ public class ListarProductoView extends Frame {
         detalleArea.setText(textoDetalle);
 
         Button cerrarButton = new Button("Cerrar");
-        cerrarButton.addActionListener(e -> detalleFrame.dispose()); // Cierra solo esta ventana
+        cerrarButton.addActionListener(e -> detalleFrame.dispose());
 
         Panel botonPanel = new Panel(new FlowLayout(FlowLayout.RIGHT));
         botonPanel.add(cerrarButton);
